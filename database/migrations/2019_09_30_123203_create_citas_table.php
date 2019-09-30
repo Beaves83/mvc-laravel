@@ -16,12 +16,13 @@ class CreateCitasTable extends Migration
         Schema::create('citas', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
-            $table->integer("cliente_id");
+            $table->integer("cliente_id")->unsigned();
             $table->date("fecha");
             $table->integer("numeroempleadosreservados");
             $table->integer("numeroempleadosasistentes")->default(0);
             
-            $table->foreign('cliente_id')->references('id')->on('clientes');
+            $table->foreign('cliente_id')->references('id')->on('clientes')
+                    ->onDelete('cascade');
         });
     }
 

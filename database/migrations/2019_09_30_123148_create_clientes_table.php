@@ -26,11 +26,7 @@ class CreateClientesTable extends Migration
             $table->date("fechainiciocontrato");
             $table->integer("numeroreconocimientoscontratados");
             $table->integer("numeroreconocimientosutilizados")->default(1);
-            $table->boolean("activo")->default(FALSE);
-            
-            $table->unique('codigo');
-            $table->unique('razonsocial');
-            $table->unique('cif');
+            $table->boolean("activo")->default(FALSE);            
         });
         
         
