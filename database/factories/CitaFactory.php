@@ -11,7 +11,7 @@ $factory->define(\App\Cita::class, function (Faker $faker) {
     return [
         'cliente_id' =>  $clienteAleatorio->id,
         'fecha' => $faker->dateTimeBetween(),
-        'numeroempleadosreservados' => $faker->numberBetween(1,$clienteAleatorio->NumeroReconocimientosContratados),
-        'numeroempleadosasistentes' => $faker->numberBetween(0,$clienteAleatorio->NumeroReconocimientosContratados)
+        'numeroempleadosreservados' => $faker->numberBetween(1,$clienteAleatorio->numeroreconocimientoscontratados),
+        'numeroempleadosasistentes' => $faker->numberBetween(0,$clienteAleatorio->numeroreconocimientoscontratados)
     ];
 });

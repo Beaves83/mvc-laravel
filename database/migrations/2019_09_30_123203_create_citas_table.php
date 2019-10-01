@@ -14,12 +14,13 @@ class CreateCitasTable extends Migration
     public function up()
     {
         Schema::create('citas', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->timestamps();
             $table->integer("cliente_id")->unsigned();
             $table->date("fecha");
             $table->integer("numeroempleadosreservados");
-            $table->integer("numeroempleadosasistentes")->default(0);
+            $table->integer("numeroempleadosasistentes");
             
             $table->foreign('cliente_id')->references('id')->on('clientes')
                     ->onDelete('cascade');

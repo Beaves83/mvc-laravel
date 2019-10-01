@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use App\Cliente;
 
 class CitaController extends Controller
 {
@@ -34,8 +36,16 @@ class CitaController extends Controller
      */
     public function store()
     {
-        $citas = \App\Cita::get()->take(10);
-        return $citas;
+        //$citas = \App\Cita::get()->take(30);
+        $citas = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
+                ->select('citas.*','clientes.razonsocial')
+                ->get();
+        //$valor = $citas->clientestemporal;
+        //$clientes = \App\Cliente::all();
+
+        //return response() -> json(\App\Cita::with('cliente.razonsocial')->get()); 
+        return response() -> json($citas);       
+        
     }
 
     /**
