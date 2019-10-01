@@ -13,7 +13,8 @@ class CitaController extends Controller
      */
     public function index()
     {
-        //
+        $citas = \App\Cita::get()->take(10);
+        return view('gestioncitas', compact('citas'));
     }
 
     /**
@@ -33,7 +34,8 @@ class CitaController extends Controller
      */
     public function store()
     {
-        //
+        $citas = \App\Cita::get()->take(10);
+        return $citas;
     }
 
     /**

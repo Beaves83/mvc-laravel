@@ -16,7 +16,7 @@ Route::delete('clientes/{cliente}', 'ClienteController@destroy');
 //Citas
 Route::get('citas', 'CitaController@index');
 Route::get('citas/create', 'CitaController@create');
-Route::post('citas', 'CitaController@store');
+Route::get('citas/store', 'CitaController@store');
 Route::get('citas/{cita}', 'CitaController@show');
 Route::get('citas/{cita}/edit', 'CitaController@edit');
 Route::put('citas/{cita}', 'CitaController@update');
