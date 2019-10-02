@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Cliente;
+use App\Cita;
 
 class CitaController extends Controller
 {
@@ -91,10 +92,10 @@ class CitaController extends Controller
      */
     public function all()
     {       
-        $citas = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
-                ->select('citas.*','clientes.razonsocial')
-                ->get()->take(30);
-        return response() -> json($citas); 
+//        $citas = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
+//                ->select('citas.*','clientes.razonsocial')
+//                ->get()->take(30);
+        return response() -> json(Cita::reservesWithClient()); 
     }
 
     /**
@@ -105,8 +106,8 @@ class CitaController extends Controller
      */
     public function show($id)
     {
-        $cita = Cita::find($id);
-        return view('citas.show', array('cita' => $cita));
+        $cita = Cita::reservesWithClientWithFilter($id);
+        return view('gestionvisitas', $cita);   
     }
 
     /**
@@ -184,5 +185,14 @@ class CitaController extends Controller
         else {
             return "No se ha podido actualizar la cita";
         } 
+    }
+    
+    public function conversionRequestToArray(Request $request){
+        $json = $request -> input('json', null);
+        $params_array = json_decode($json, true);
+        $params_array = array_change_key_case($params_array, CASE_LOWER);
+        $params_array = array_map('trim',$params_array);
+        
+        return $params_array;
     }
 }

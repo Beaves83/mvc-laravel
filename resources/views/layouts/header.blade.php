@@ -38,7 +38,7 @@
                         <a class="nav-link" href="{{ URL::asset('citas') }}">Citas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ URL::asset('citas/visita') }}">Visitas</a>
+                        <a class="nav-link" href="{{ URL::asset('citas/1') }}">Visitas</a>
                     </li>
                 </ul>
             </div>

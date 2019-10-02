@@ -14,7 +14,7 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = Cliente::get()->take(10);
+        $clientes = Cliente::get()->take(30);
         return view('gestionclientes', compact('clientes'));
     }
 

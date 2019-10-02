@@ -10,10 +10,9 @@ class DatabaseSeeder extends Seeder
      * @return void
      */
     public function run()
-    {
-        
-        factory(App\Cliente::class, 100)->create();
-        factory(App\Cita::class, 300)->create();
+    {      
+        factory(App\Cliente::class, 1000)->create();
+        factory(App\Cita::class, 30000)->create();
         factory(App\User::class, 300)->create();
     }
 }

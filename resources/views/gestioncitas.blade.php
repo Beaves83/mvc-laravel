@@ -8,75 +8,75 @@
 
     </center>
 
-    <br />
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-            <div class="form-group ">
-                <div class="">
-                    Desde :
-                    <select name="filter_gender" id="filter_gender" class="form-control col-md-6" required>
+    <table border="0" cellspacing="5" cellpadding="5">
+        <tbody>
+            <tr class="col-12">
+                <td>Fechas:</td>
+    <!--            <td><input type="text" id="min" name="min"></td>-->
+                <td style="width:350px">
+                    <select name="filter_gender" id="filter_gender" class="form-control col-md-12" required>
                         <option value="">Elige una fecha</option>
                         @foreach($citas as $cita)
                         <option value="{{ $cita->id }}">{{ $cita->fecha }}</option>
                         @endforeach
                     </select>
-                </div>
-                <div class="">
-                    Hasta
-                     <select name="filter_gender2" id="filter_gender2" class="form-control col-md-6"  required>
+                </td>
+                <td style="width:350px">
+                    <select name="filter_gender" id="filter_gender" class="form-control col-md-12" required>
                         <option value="">Elige una fecha</option>
                         @foreach($citas as $cita)
                         <option value="{{ $cita->id }}">{{ $cita->fecha }}</option>
                         @endforeach
                     </select>
-                </div>
-               
-               
-            </div>
-            <div class="form-group">
-                <select name="filter_country" id="filter_country" class="form-control" required>
-                    <option value="">Selecciona un cliente</option>
-                    @foreach($citas as $cita)
-                    <option value="{{ $cita->cliente_id }}">{{ $cita->razonsocial }}</option>
-                    @endforeach
-                </select>
-            </div>
-
-            <div class="form-group" align="center">
-                <button type="button" name="filter" id="filter" class="btn btn-info">Filtrar</button>
-
-                <button type="button" name="reset" id="reset" class="btn btn-default">Resetear</button>
-            </div>
-        </div>
-        <div class="col-md-4"></div>
-    </div>
-    <br />
-    <div class="table-responsive">
-        <table id="tablacitas" class="table table-bordered table-striped">
-            <thead>
-                <tr>    
-                    <th>Cliente</th>
-                    <th>Fecha</th>
-                    <th>Empleados reservados</th>
-                    <th>Asistencias</th>
-                    <th></th>
-                </tr>
-            </thead>
-        </table>
-    </div>
-    <br />
-    <br />
+                </td >
+                <td>Municipio</td>
+                <td style="width:350px">
+                    <select name="filter_country" id="filter_country" class="form-control" required>
+                        <option value="">Selecciona un cliente</option>
+                        @foreach($citas as $cita)
+                        <option value="{{ $cita->cliente_id }}">{{ $cita->razonsocial }}</option>
+                        @endforeach
+                    </select>
+                </td>
+                <td style="width:100px">
+                    <button class='btn btn-primary'>Filtrar</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <table id="tablacitas" class="table table-bordered table-striped">
+        <thead>
+            <tr>    
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Empleados reservados</th>
+                <th>Asistencias</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($citas as $cita)
+            <tr>
+                <td>{{ $cita->razonsocial }}</td>
+                <td>{{ $cita->fecha }}</td>
+                <td>{{ $cita->numeroempleadosreservados }}</td>
+                <td>{{ $cita->numeroempleadosasistentes }}</td>
+                <td><button class="btn"><i class="fas fa-edit"></i></button><button class="btn"><i class="fas fa-trash"></i></button></td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 
 <script>
     $(document).ready(function () {
 
-        fill_datatable();
+        //fill_datatable();
 
         function fill_datatable(filter_gender = '', filter_country = '')
         {
-            console.debug("filtros: "+filter_gender )
+            //console.debug("filtros: "+filter_gender )
             var dataTable = $('#tablacitas').DataTable({
                 processing: true,
                 serverSide: true,
@@ -85,7 +85,7 @@
                     type: 'GET',
                     dataType: 'json',
                     dataSrc: function (json) {
-                        console.debug(json)
+                        //console.debug(json)
                         return json;
                     },
 //                success :  function(result)
