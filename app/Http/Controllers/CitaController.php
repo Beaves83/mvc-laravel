@@ -9,7 +9,7 @@ use App\Cliente;
 class CitaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Devuelve la vista con las citas.
      *
      * @return Response
      */
@@ -20,7 +20,7 @@ class CitaController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Muestra el formulario para crear una cita.
      *
      * @return Response
      */
@@ -28,57 +28,118 @@ class CitaController extends Controller
     {
         //
     }
-
+    
     /**
-     * Store a newly created resource in storage.
+     * Guarda una cita.
      *
      * @return Response
      */
-    public function store()
-    {
-        //$citas = \App\Cita::get()->take(30);
+    public function store(Request $request)
+    {      
+        $params_array = $this ->conversionRequestToArray($request);
+         
+        if(!empty($params_array)){
+          
+            //Validar
+            $validate = \Validator::make($params_array, [
+                'idcliente'       => 'required|numeric',
+                'fecha'           => 'required|date',
+                'numeroempleadosreservados' => 'required|numeric'
+            ]);
+            
+            if($validate->fails()){        
+                $data = array (
+                    'status' => 'error',
+                    'code' => 404,
+                    'message' => 'La cita no se ha creado.',
+                    'errors' => $validate->errors()
+                );            
+            } else {
+                $cita = new Cita();               
+                $cita->idcliente = $params_array['idcliente'];
+                $cita->fecha = $params_array['fecha'];
+                $cita->numeroempleadosreservados = $params_array['numeroempleadosreservados'];      
+                $cita->save();
+            
+                $data = array (
+                    'status' => 'success',
+                    'code' => 200,
+                    'message' => 'La cita se ha creado correctamente.',
+                    'cita' => $cita
+                );
+            }
+        } else {             
+            $data = array (
+                    'status' => 'error',
+                    'code' => 404,
+                    'message' => 'Los datos enviados no son correctos.'
+                );
+        }
+        
+        //return $data;
+        return response() -> json($data); 
+    }
+    
+    /**
+     * Devuelve un listado completo con todas las citas.
+     *
+     * @return Response
+     */
+    public function all()
+    {       
         $citas = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
                 ->select('citas.*','clientes.razonsocial')
-                ->get();
-        //$valor = $citas->clientestemporal;
-        //$clientes = \App\Cliente::all();
-
-        //return response() -> json(\App\Cita::with('cliente.razonsocial')->get()); 
-        return response() -> json($citas);       
-        
+                ->get()->take(30);
+        return response() -> json($citas); 
     }
 
     /**
-     * Display the specified resource.
+     * Muestra una cita especifica.
      *
      * @param  int  $id
      * @return Response
      */
     public function show($id)
     {
-        //
+        $cita = Cita::find($id);
+        return view('citas.show', array('cita' => $cita));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Devuelve una cita
      *
      * @param  int  $id
      * @return Response
      */
     public function edit($id)
     {
-        //
+        return \App\Cita::find($id);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Actualizamos una cita.
      *
      * @param  int  $id
      * @return Response
      */
-    public function update($id)
+    public function update(Request $request)
     {
-        //
+        $params_array = $this ->conversionRequestToArray($request);
+        
+        $cita = \App\Cita::find($params_array['id']);
+       
+        if(!empty($cita) & $cita->NumeroEmpleadosAsistentes == 0){
+            Cita::where('id', $params_array['id'])
+            ->update(
+                ['numeroempleadosreservados' => $params_array['numeroempleadosreservados'],
+                'fecha' => $params_array['fecha'],
+                'numeroempleadosreservados' => $params_array['numeroempleadosreservados']]);
+            
+            return "La cita ha sido actualiza.";
+        }     
+        else {
+            return "La cita no puede ser modificada.";
+        } 
     }
 
     /**
@@ -90,5 +151,34 @@ class CitaController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    //Actualizacion realizada por el mÃ©dico.
+    public function confirmReserve(Request $request){   
+        $params_array = $this ->conversionRequestToArray($request);
+        
+        $cita = \App\Cita::find($params_array['id']);
+        $cliente = \App\Cliente::find($params_array['idcliente']);
+       
+        if(!empty($cita) && !empty($cliente)){
+            Cita::where('id', $params_array['id'])
+            ->update(['numeroempleadosasistentes' => $params_array['numeroempleadosasistentes']]);
+            
+            $totalRevisiones = $params_array['numeroempleadosasistentes'] + $cliente->NumeroReconocimientosUtilizados;        
+            $contratoActivo = true;
+            if($totalRevisiones >= $cliente->NumeroReconocimientosContratados)
+            {
+                $contratoActivo = false;
+            }
+            
+            Cliente::where('id', $params_array['idcliente'])
+            ->update(['numeroreconocimientosutilizados' => $totalRevisiones,
+                        'activo' => $contratoActivo]);
+            
+            return "La cita ha sido actualiza.";
+        }     
+        else {
+            return "No se ha podido actualizar la cita";
+        } 
     }
 }

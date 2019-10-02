@@ -66,7 +66,7 @@
                 processing: true,
                 serverSide: true,
                 ajax: {
-                    url: "{{ URL::asset('citas/store') }}",
+                    url: "{{ URL::asset('citas/all') }}",
                     type: 'GET',
                     dataType: 'json',
                     dataSrc: function (json) {

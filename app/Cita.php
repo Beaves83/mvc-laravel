@@ -7,16 +7,19 @@ use App\Cliente;
 
 class Cita extends Model
 {
+    protected  $table = 'citas';
+    
+    protected $fillable = [
+        'idcliente', 'fecha', 'numeroempleadosreservados', 'numeroempleadosasistentes'
+    ];
+    
+    //Devuele un cliente
     public function cliente() {
         return $this->belongsTo('App\Cliente','cliente_id');
-    }
+    }  
     
-    public function clientes() {
-        return $this->belongsToMany('App\Cliente','cliente_id');
-    }
-    
-    public function clientestemporal()
-    {
-        return $this->hasMany(Cliente::class);
+    //Nos devuelve las citas de un día especificado. Ej:Cita::fecha('2019-09-29')->get();
+    public function citasDiarias($query, $fecha){
+        return $query->where('fecha',$fecha);
     }
 }
