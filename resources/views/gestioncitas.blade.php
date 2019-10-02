@@ -39,6 +39,15 @@
                 <td style="width:100px">
                     <button class='btn btn-primary'>Filtrar</button>
                 </td>
+                <td style="width:100px">
+                    Exportar:
+                </td>
+                <td>
+                    <button type="button" class="btn btn-outline-success">Excel</button>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-outline-danger">Pdf</button>
+                </td>
             </tr>
         </tbody>
     </table>
