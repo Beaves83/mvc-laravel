@@ -15,13 +15,9 @@ class CitaController extends Controller
      * @return Response
      */
     public function index()
-    {
-        $citas = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
-                ->select('citas.*','clientes.razonsocial')
-                ->get()->take(30);
-        
-        //$citas = \App\Cita::get()->take(10);
-        return view('gestioncitas', compact('citas'));
+    {       
+        $citas = Cita::reservartionsWithClient();      
+        return view('gestioncitas')->with( compact('citas'));
     }
 
     /**
@@ -41,48 +37,7 @@ class CitaController extends Controller
      */
     public function store(Request $request)
     {      
-        $params_array = $this ->conversionRequestToArray($request);
-         
-        if(!empty($params_array)){
-          
-            //Validar
-            $validate = \Validator::make($params_array, [
-                'idcliente'       => 'required|numeric',
-                'fecha'           => 'required|date',
-                'numeroempleadosreservados' => 'required|numeric'
-            ]);
-            
-            if($validate->fails()){        
-                $data = array (
-                    'status' => 'error',
-                    'code' => 404,
-                    'message' => 'La cita no se ha creado.',
-                    'errors' => $validate->errors()
-                );            
-            } else {
-                $cita = new Cita();               
-                $cita->idcliente = $params_array['idcliente'];
-                $cita->fecha = $params_array['fecha'];
-                $cita->numeroempleadosreservados = $params_array['numeroempleadosreservados'];      
-                $cita->save();
-            
-                $data = array (
-                    'status' => 'success',
-                    'code' => 200,
-                    'message' => 'La cita se ha creado correctamente.',
-                    'cita' => $cita
-                );
-            }
-        } else {             
-            $data = array (
-                    'status' => 'error',
-                    'code' => 404,
-                    'message' => 'Los datos enviados no son correctos.'
-                );
-        }
-        
-        //return $data;
-        return response() -> json($data); 
+        return App\Cita::store($request);
     }
     
     /**
@@ -92,10 +47,7 @@ class CitaController extends Controller
      */
     public function all()
     {       
-//        $citas = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
-//                ->select('citas.*','clientes.razonsocial')
-//                ->get()->take(30);
-        return response() -> json(Cita::reservesWithClient()); 
+        return response() -> json(Cita::reservartionsWithClient()); 
     }
 
     /**
@@ -106,7 +58,7 @@ class CitaController extends Controller
      */
     public function show($id)
     {
-        $cita = Cita::reservesWithClientWithFilter($id);
+        $cita = Cita::reservartionsWithClientWithFilter($id);
         return view('gestionvisitas', $cita);   
     }
 
@@ -129,7 +81,7 @@ class CitaController extends Controller
      */
     public function update(Request $request)
     {
-        $params_array = $this ->conversionRequestToArray($request);
+         $params_array = $this ->conversionRequestToArray($request);
         
         $cita = \App\Cita::find($params_array['id']);
        
@@ -144,7 +96,7 @@ class CitaController extends Controller
         }     
         else {
             return "La cita no puede ser modificada.";
-        } 
+        }
     }
 
     /**
@@ -159,7 +111,7 @@ class CitaController extends Controller
     }
     
     //Actualizacion realizada por el mÃ©dico.
-    public function confirmReserve(Request $request){   
+    public function confirmReservation(Request $request){   
         $params_array = $this ->conversionRequestToArray($request);
         
         $cita = \App\Cita::find($params_array['id']);
@@ -185,14 +137,5 @@ class CitaController extends Controller
         else {
             return "No se ha podido actualizar la cita";
         } 
-    }
-    
-    public function conversionRequestToArray(Request $request){
-        $json = $request -> input('json', null);
-        $params_array = json_decode($json, true);
-        $params_array = array_change_key_case($params_array, CASE_LOWER);
-        $params_array = array_map('trim',$params_array);
-        
-        return $params_array;
-    }
+    }  
 }

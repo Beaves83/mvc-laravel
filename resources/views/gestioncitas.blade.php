@@ -5,19 +5,17 @@
 <div class="container">
     <center>
         <h1>Citas médicas</h1>
-
     </center>
 
     <table border="0" cellspacing="5" cellpadding="5">
         <tbody>
             <tr class="col-12">
                 <td>Fechas:</td>
-    <!--            <td><input type="text" id="min" name="min"></td>-->
                 <td style="width:350px">
                     <select name="filter_gender" id="filter_gender" class="form-control col-md-12" required>
                         <option value="">Elige una fecha</option>
                         @foreach($citas as $cita)
-                        <option value="{{ $cita->id }}">{{ $cita->fecha }}</option>
+                            <option value="{{ $cita->id }}">{{ $cita->fecha }}</option>
                         @endforeach
                     </select>
                 </td>
