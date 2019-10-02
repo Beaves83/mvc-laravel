@@ -4,7 +4,7 @@
 @section('content')
 <div class="container">
     <center>
-        <h1>anove</h1>
+        <h1>Citas médicas</h1>
 
     </center>
 
@@ -12,27 +12,41 @@
     <div class="row">
         <div class="col-md-4"></div>
         <div class="col-md-4">
-            <div class="form-group">
-                <select name="filter_gender" id="filter_gender" class="form-control" required>
-                    <option value="">Seleccion ID</option>
-                    @foreach($citas as $cita)
-                    <option value="{{ $cita->id }}">{{ $cita->id }}</option>
-                    @endforeach
-                </select>
+            <div class="form-group ">
+                <div class="">
+                    Desde :
+                    <select name="filter_gender" id="filter_gender" class="form-control col-md-6" required>
+                        <option value="">Elige una fecha</option>
+                        @foreach($citas as $cita)
+                        <option value="{{ $cita->id }}">{{ $cita->fecha }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="">
+                    Hasta
+                     <select name="filter_gender2" id="filter_gender2" class="form-control col-md-6"  required>
+                        <option value="">Elige una fecha</option>
+                        @foreach($citas as $cita)
+                        <option value="{{ $cita->id }}">{{ $cita->fecha }}</option>
+                        @endforeach
+                    </select>
+                </div>
+               
+               
             </div>
             <div class="form-group">
                 <select name="filter_country" id="filter_country" class="form-control" required>
-                    <option value="">Selecciona Cliente</option>
+                    <option value="">Selecciona un cliente</option>
                     @foreach($citas as $cita)
-                    <option value="{{ $cita->cliente_id }}">{{ $cita->cliente_id }}</option>
+                    <option value="{{ $cita->cliente_id }}">{{ $cita->razonsocial }}</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="form-group" align="center">
-                <button type="button" name="filter" id="filter" class="btn btn-info">Filter</button>
+                <button type="button" name="filter" id="filter" class="btn btn-info">Filtrar</button>
 
-                <button type="button" name="reset" id="reset" class="btn btn-default">Reset</button>
+                <button type="button" name="reset" id="reset" class="btn btn-default">Resetear</button>
             </div>
         </div>
         <div class="col-md-4"></div>
@@ -62,6 +76,7 @@
 
         function fill_datatable(filter_gender = '', filter_country = '')
         {
+            console.debug("filtros: "+filter_gender )
             var dataTable = $('#tablacitas').DataTable({
                 processing: true,
                 serverSide: true,
@@ -120,7 +135,7 @@
             }
             else
             {
-                alert('Select Both filter option');
+                alert('Selecciona los filtros');
             }
         });
 

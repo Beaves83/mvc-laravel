@@ -15,7 +15,11 @@ class CitaController extends Controller
      */
     public function index()
     {
-        $citas = \App\Cita::get()->take(10);
+        $citas = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
+                ->select('citas.*','clientes.razonsocial')
+                ->get()->take(30);
+        
+        //$citas = \App\Cita::get()->take(10);
         return view('gestioncitas', compact('citas'));
     }
 
