@@ -5,9 +5,9 @@ Route::get('/', function () {
 });
 
 //Clientes
-Route::get('clientes', 'ClienteController@index');
+Route::get('clientes', 'ClienteController@index');//->middleware(ApiAuthMiddleware::class);
 Route::get('clientes/create', 'ClienteController@create');
-Route::get('clientes/store', 'ClienteController@store');
+Route::post('clientes/store', 'ClienteController@store');
 Route::get('clientes/all', 'ClienteController@sll');
 Route::get('clientes/{cliente}', 'ClienteController@show');
 Route::get('clientes/{cliente}/edit', 'ClienteController@edit');
@@ -17,7 +17,7 @@ Route::delete('clientes/{cliente}', 'ClienteController@destroy');
 //Citas
 Route::get('citas', 'CitaController@index');
 Route::get('citas/create', 'CitaController@create');
-Route::get('citas/store', 'CitaController@store');
+Route::post('citas/store', 'CitaController@store');
 Route::get('citas/all', 'CitaController@all');
 Route::get('citas/{cita}', 'CitaController@show');
 Route::get('citas/{cita}/edit', 'CitaController@edit');
