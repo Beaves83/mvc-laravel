@@ -5,11 +5,11 @@ Route::get('/', function () {
 });
 
 //Clientes
-Route::get('clientes', 'ClienteController@index');//->middleware(ApiAuthMiddleware::class);
+    Route::get('clientes', 'ClienteController@index');//->middleware(ApiAuthMiddleware::class);
 Route::get('clientes/create', 'ClienteController@create');
 Route::post('clientes/store', 'ClienteController@store');
-Route::get('clientes/all', 'ClienteController@sll');
-Route::get('clientes/{cliente}', 'ClienteController@show');
+Route::get('clientes/all', 'ClienteController@all');
+    Route::get('clientes/{cliente}', 'ClienteController@show');
 Route::get('clientes/{cliente}/edit', 'ClienteController@edit');
 Route::put('clientes/{cliente}', 'ClienteController@update');
 Route::delete('clientes/{cliente}', 'ClienteController@destroy');
@@ -24,3 +24,8 @@ Route::get('citas/{cita}/edit', 'CitaController@edit');
 Route::put('citas/{cita}', 'CitaController@update');
 Route::get('citas/confirmReserve', 'CitaController@confirmReserve');
 Route::delete('citas/{cita}', 'CitaController@destroy');
+
+//Usuario
+Route::get('usuarios', 'UserController@index');
+Route::get('usuarios/listado', 'UserController@all');
+Route::get('usuarios/register', 'UserController@register');

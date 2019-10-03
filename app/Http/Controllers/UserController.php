@@ -14,7 +14,16 @@ class UserController extends Controller
      */
     public function register(Request $request){
         
-        return User::register($request);
+        $json = $request -> input('json', null);       
+        $params_array = array_map('trim',json_decode($json, true)); 
+        
+        $validate = \Validator::make($params_array, [
+                'name'      => 'required',
+                'email'     => 'required|email|unique:users',
+                'password' => 'required',
+            ]);
+
+        return User::register($request, $validate, $params_array);        
     }
     
     /**
@@ -86,7 +95,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        echo 'Estamos en el index';
     }
 
     /**
@@ -117,7 +126,8 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        //
+        $usuario = User::find($id);
+        return view('usuarios.show', array('usuario' => $usuario));
     }
 
     /**
@@ -129,6 +139,17 @@ class UserController extends Controller
     public function edit($id)
     {
         //
+    }
+    
+    /**
+     * Devuelve un listado completo con todas las citas.
+     *
+     * @return Response
+     */
+    public function all()
+    {       
+        $usuarios = User::all()->take(30);
+        return response() -> json($usuarios); 
     }
 
     /**
