@@ -81,7 +81,7 @@ class CitaController extends Controller
      */
     public function update(Request $request)
     {
-         $params_array = $this ->conversionRequestToArray($request);
+        $params_array = $this ->conversionRequestToArray($request);
         
         $cita = \App\Cita::find($params_array['id']);
        
@@ -137,5 +137,15 @@ class CitaController extends Controller
         else {
             return "No se ha podido actualizar la cita";
         } 
-    }  
+    } 
+    
+    //Conversión Request a Array.
+    public function conversionRequestToArray(Request $request){
+        $json = $request -> input('json', null);
+        $params_array = json_decode($json, true);
+        $params_array = array_change_key_case($params_array, CASE_LOWER);
+        $params_array = array_map('trim',$params_array);
+        
+        return $params_array;
+    }
 }

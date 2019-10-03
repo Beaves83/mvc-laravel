@@ -115,7 +115,7 @@ class ClienteController extends Controller
         //
     }
     
-    //ConversiÃ³n Request a Array.
+    //Conversión Request a Array.
     public function conversionRequestToArray(Request $request){
         $json = $request -> input('json', null);
         $params_array = json_decode($json, true);

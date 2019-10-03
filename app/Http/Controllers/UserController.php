@@ -6,106 +6,51 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\User;
 
-class UserController extends Controller
-{
+class UserController extends Controller {
+
     /**
      * Registro de usuario.
      *
      */
-    public function register(Request $request){
-        
-        $json = $request -> input('json', null);       
-        $params_array = array_map('trim',json_decode($json, true)); 
-        
-        $validate = \Validator::make($params_array, [
-                'name'      => 'required',
-                'email'     => 'required|email|unique:users',
-                'password' => 'required',
-            ]);
+    public function register(Request $request) {
 
-        return User::register($request, $validate, $params_array);        
+        $json = $request->input('json', null);
+        $params_array = array_map('trim', json_decode($json, true));
+
+        $validate = \Validator::make($params_array, [
+                    'name' => 'required',
+                    'email' => 'required|email|unique:users',
+                    'password' => 'required',
+        ]);
+
+        return User::register($request, $validate, $params_array);
     }
-    
+
     /**
      * Login de usuario.
      *
      */
-    public function login(Request $request){
+    public function login(Request $request) {
         return User::login($request);
     }
-    
+
     /**
      * Actualización de datos
      *
      */
-    public function update(Request $request){
-        
-        //Comprobar si el usuario está identificado.
-        $token = $request->header('Authorization');      
-        $jwtAuth = new \JwtAuth();
-        $checkToken = $jwtAuth->checkToken($token);
-        
-        //Recoger los datos por POST
-        $json = $request -> input('json', null);
-        $params_array = json_decode($json, true);
-        
-        if($checkToken && !empty($params_array)){                                         
-            //Sacar usuario identificado
-            $user = $jwtAuth->checkToken($token, true);
-            
-            //Validar los datos
-            $validate = \Validator::make($params_array, [
-                'name'      => 'required|alpha', //alpha -> Caracteres alfanumericos.
-                'surname'   => 'required|alpha',
-                'email'     => 'required|email|unique:users,'.$user->sub //Comprobar si el usuario existe ya (duplicado) exepcto el de este id.
-            ]);
-            
-            //Quitar los campos que no quiero actualizar
-            unset($params_array['id']);
-            unset($params_array['role']);
-            unset($params_array['password']);
-            unset($params_array['created_at']);
-            unset($params_array['remember_token']);
-            
-            //Actualizar el usuario en la BBDD
-            $user_update = User::where('id', $user->sub)->update($params_array);
-            
-            //Devolver un array con el resultado
-            $data = array(
-                'code' => 200,
-                'status' => 'success',
-                'user' => $user,
-                'changes' => $params_array
-                ); 
-        } else {
-            $data = array(
-                'code' => 406,
-                'status' => 'error',
-                'message' => 'El usuario no está identificado correctamente. '
-                );
-        }
-        
-        
-        return response()->json($data, $data['code']);
+    public function update(Request $request) {
+
+        $params_array = $this ->conversionRequestToArray($request);
+        return User::updateUser($params_array);
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
-    {
+    public function index() {
         echo 'Estamos en el index';
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -113,9 +58,17 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function store()
-    {
-        //
+    public function store(Request $request) {
+        
+        $params_array = $this ->conversionRequestToArray($request);
+        $validate = \Validator::make($params_array, [
+                    'name' => 'required',
+                    'email' => 'required|email|unique:users',
+                    'password' => 'required',
+        ]);
+        
+        
+        return User::store($params_array, $validate);
     }
 
     /**
@@ -124,32 +77,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         $usuario = User::find($id);
         return view('usuarios.show', array('usuario' => $usuario));
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-    
-    /**
      * Devuelve un listado completo con todas las citas.
      *
      * @return Response
      */
-    public function all()
-    {       
+    public function all() {
         $usuarios = User::all()->take(30);
-        return response() -> json($usuarios); 
+        return response()->json($usuarios);
     }
 
     /**
@@ -158,8 +98,19 @@ class UserController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        $usuario = User::find($id);
+        //$usuario->delete();
+        return $usuario;
     }
+    
+    //Conversión Request a Array.
+    public function conversionRequestToArray(Request $request){
+        $json = $request -> input('json', null);
+        $params_array = json_decode($json, true);
+        $params_array = array_map('trim',$params_array);
+        
+        return $params_array;
+    }
+
 }

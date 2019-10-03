@@ -7,6 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Authenticatable {
 
@@ -66,7 +67,7 @@ class User extends Authenticatable {
                 'user' => $user
             );
         }
-        
+
         return response()->json($data, $data['code']);
     }
 
@@ -100,6 +101,43 @@ class User extends Authenticatable {
         }
         //Finalmente devolvemos el token de usuario.
         return response()->json($signup, 200);
+    }
+
+    public static function updateUser($params_array) {
+        $user = \App\User::find($params_array['id']);
+        $usuarioActualizado = false;
+        if (!empty($user)) {
+            $user->name = $params_array['name'];
+            $usuarioActualizado = $user->update();
+        }
+
+
+        if ($usuarioActualizado) {
+            return "El usuario ha sido modificado.";
+        } else {
+            return "El usuario no puede ser modificado.";
+        }
+    }
+
+    public static function store($params_array, $validate) {
+
+        $usuarioSalvado = false;
+        
+        if (!$validate->fails()) {
+            $user = new User();
+
+            $user->password = hash('sha256', $params_array['password']);
+            $user->rol = $params_array['rol'];
+            $user->email = $params_array['email'];
+            $user->name = $params_array['name'];
+            $usuarioSalvado = $user->save();
+        } 
+        
+        if ($usuarioSalvado) {
+            return "El usuario ha sido creado.";
+        } else {
+            return "El usuario no se ha podido guardar.";
+        }
     }
 
 }

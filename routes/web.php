@@ -29,3 +29,6 @@ Route::delete('citas/{cita}', 'CitaController@destroy');
 Route::get('usuarios', 'UserController@index');
 Route::get('usuarios/listado', 'UserController@all');
 Route::get('usuarios/register', 'UserController@register');
+Route::get('usuarios/update', 'UserController@update');
+Route::get('usuarios/store', 'UserController@store');
+Route::get('usuarios/destroy', 'UserController@destroy');
