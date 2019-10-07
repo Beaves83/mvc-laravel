@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\User;
+//use App\Http\Requests\ValidacionesUsuario;
+
 
 class UserController extends Controller {
 
@@ -15,6 +17,7 @@ class UserController extends Controller {
     public function register(Request $request) {
 
         $json = $request->input('json', null);
+        //dd($json);
         $params_array = array_map('trim', json_decode($json, true));
 
         $validate = \Validator::make($params_array, [
@@ -99,8 +102,9 @@ class UserController extends Controller {
      * @return Response
      */
     public function destroy($id) {
+        //dd($id);
         $usuario = User::find($id);
-        //$usuario->delete();
+        $usuario->delete();
         return $usuario;
     }
     
@@ -109,7 +113,6 @@ class UserController extends Controller {
         $json = $request -> input('json', null);
         $params_array = json_decode($json, true);
         $params_array = array_map('trim',$params_array);
-        
         return $params_array;
     }
 

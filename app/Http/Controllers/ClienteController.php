@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Cliente;
+use Illuminate\Http\Response;
 
 class ClienteController extends Controller
 {
@@ -36,7 +37,22 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {   
-        return Cliente::store($request);
+        $json = $request->input('json', null);
+        $params_array = array_map('trim', json_decode($json, true));
+        
+        $validate = \Validator::make($params_array, [
+                'codigo'                => 'required|alpha_num|unique:cliente|max:15',
+                'razonsocial'           => 'required|unique:cliente|max:15',
+                'cif'                   => 'required|alpha_num|unique:cliente|max:15',
+                'direccion'             => 'required|max:100',
+                'municipio'             => 'required|max:100',
+                'provincia'             => 'required|max:100',
+                'fechainiciocontrato'   => 'required|date',
+                'fechafincontrato'      => 'required|date',
+                'numeroreconocimientoscontratados'    => 'required|numeric'
+        ]);
+        
+        return Cliente::store($request, $validate, $params_array);
     }
     
     /**
@@ -82,26 +98,27 @@ class ClienteController extends Controller
     public function update(Request $request)
     {
         $params_array = $this ->conversionRequestToArray($request);
+        return Cliente::updateClient($request, $params_array);
         
-        $cliente = \App\Cliente::find($params_array['id']);
-       
-        if(!empty($cliente)){
-            Cliente::where('id', $params_array['id'])
-            ->update(
-                ['razonsocial' => $params_array['razonsocial'],
-                'cif' => $params_array['cif'],
-                'direccion' => $params_array['direccion'],
-                'municipio' => $params_array['municipio'],
-                'provincia' => $params_array['provincia'],
-                'fechainiciocontrato' => $params_array['fechainiciocontrato'],
-                'fechafincontrato' => $params_array['fechafincontrato'],
-                'numeroreconocimientoscontratados' => $params_array['numeroreconocimientoscontratados']]);
-            
-            return "El cliente ha sido actualizo.";
-        }     
-        else {
-            return "El cliente no puede ser modificado.";
-        } 
+//        $cliente = \App\Cliente::find($params_array['id']);
+//       
+//        if(!empty($cliente)){
+//            Cliente::where('id', $params_array['id'])
+//            ->update(
+//                ['razonsocial' => $params_array['razonsocial'],
+//                'cif' => $params_array['cif'],
+//                'direccion' => $params_array['direccion'],
+//                'municipio' => $params_array['municipio'],
+//                'provincia' => $params_array['provincia'],
+//                'fechainiciocontrato' => $params_array['fechainiciocontrato'],
+//                'fechafincontrato' => $params_array['fechafincontrato'],
+//                'numeroreconocimientoscontratados' => $params_array['numeroreconocimientoscontratados']]);
+//            
+//            return "El cliente ha sido actualizo.";
+//        }     
+//        else {
+//            return "El cliente no puede ser modificado.";
+//        } 
     }
 
     /**
@@ -119,9 +136,6 @@ class ClienteController extends Controller
     public function conversionRequestToArray(Request $request){
         $json = $request -> input('json', null);
         $params_array = json_decode($json, true);
-        $params_array = array_change_key_case($params_array, CASE_LOWER);
-        $params_array = array_map('trim',$params_array);
-        
         return $params_array;
     }
 }
