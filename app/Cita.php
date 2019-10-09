@@ -49,49 +49,31 @@ class Cita extends Model
     }
     
     //Guarda una cita.
-    public static function store(Request $request){
-        $params_array = $this ->conversionRequestToArray($request);
-         
-        if(!empty($params_array)){
-          
-            //Validar
-            $validate = \Validator::make($params_array, [
-                'idcliente'       => 'required|numeric',
-                'fecha'           => 'required|date',
-                'numeroempleadosreservados' => 'required|numeric'
-            ]);
-            
-            if($validate->fails()){        
-                $data = array (
-                    'status' => 'error',
-                    'code' => 404,
-                    'message' => 'La cita no se ha creado.',
-                    'errors' => $validate->errors()
-                );            
-            } else {
-                $cita = new Cita();               
-                $cita->idcliente = $params_array['idcliente'];
-                $cita->fecha = $params_array['fecha'];
-                $cita->numeroempleadosreservados = $params_array['numeroempleadosreservados'];      
-                $cita->save();
-            
-                $data = array (
-                    'status' => 'success',
-                    'code' => 200,
-                    'message' => 'La cita se ha creado correctamente.',
-                    'cita' => $cita
-                );
-            }
-        } else {             
-            $data = array (
-                    'status' => 'error',
-                    'code' => 404,
-                    'message' => 'Los datos enviados no son correctos.'
-                );
+    public static function store(Request $request, $validate, $params_array){
+        if ($validate->fails()) {
+            $data = array(
+                'status' => 'error',
+                'code' => 404,
+                'message' => 'La cita no se ha creado.',
+                'errors' => $validate->errors()
+            );
+        } else {
+            $cita = new Cita();               
+            $cita->cliente_id = $params_array['cliente_id'];
+            $cita->fecha = $params_array['fecha'];
+            $cita->numeroempleadosreservados = $params_array['numeroempleadosreservados'];  
+            $cita->numeroempleadosasistentes = $params_array['numeroempleadosasistentes']; 
+            $cita->save();
+
+            $data = array(
+                'status' => 'success',
+                'code' => 200,
+                'message' => 'La cita se ha creado correctamente.',
+                'cliente' => $cita
+            );
         }
-        
-        //return $data;
-        return response() -> json($data); 
+
+        return response()->json($data); 
     }
     
     public function conversionRequestToArray(Request $request){

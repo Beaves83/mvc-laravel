@@ -62,8 +62,9 @@ class ClienteController extends Controller
      */
     public function all()
     {       
-        $clientes = DB::table('clientes')->get()->take(30);
-        return response() -> json($clientes); 
+//        $clientes = DB::table('clientes')->get()->take(30);
+//        return response() -> json($clientes); 
+        return Cliente::listado();
     }
 
     /**
@@ -99,26 +100,6 @@ class ClienteController extends Controller
     {
         $params_array = $this ->conversionRequestToArray($request);
         return Cliente::updateClient($request, $params_array);
-        
-//        $cliente = \App\Cliente::find($params_array['id']);
-//       
-//        if(!empty($cliente)){
-//            Cliente::where('id', $params_array['id'])
-//            ->update(
-//                ['razonsocial' => $params_array['razonsocial'],
-//                'cif' => $params_array['cif'],
-//                'direccion' => $params_array['direccion'],
-//                'municipio' => $params_array['municipio'],
-//                'provincia' => $params_array['provincia'],
-//                'fechainiciocontrato' => $params_array['fechainiciocontrato'],
-//                'fechafincontrato' => $params_array['fechafincontrato'],
-//                'numeroreconocimientoscontratados' => $params_array['numeroreconocimientoscontratados']]);
-//            
-//            return "El cliente ha sido actualizo.";
-//        }     
-//        else {
-//            return "El cliente no puede ser modificado.";
-//        } 
     }
 
     /**
@@ -130,6 +111,12 @@ class ClienteController extends Controller
     public function destroy($id)
     {
         //
+    }
+    
+    
+    public function toexcel(Request $request){
+        $params_array = $this ->conversionRequestToArray($request);
+        dd($request);
     }
     
     //Conversión Request a Array.

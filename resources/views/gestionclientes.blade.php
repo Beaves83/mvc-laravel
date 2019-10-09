@@ -36,7 +36,7 @@
                     Exportar:
                 </td>
                 <td>
-                    <button type="button" class="btn btn-outline-success">Excel</button>
+                    <button type="button" class="btn btn-outline-success" href="{{ URL::asset('clientes/excel') }}">Excel</button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-outline-danger">Pdf</button>

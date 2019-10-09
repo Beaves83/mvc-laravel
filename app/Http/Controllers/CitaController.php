@@ -36,8 +36,17 @@ class CitaController extends Controller
      * @return Response
      */
     public function store(Request $request)
-    {      
-        return App\Cita::store($request);
+    {    
+        $json = $request->input('json', null);
+        $params_array = array_map('trim', json_decode($json, true));
+        
+        $validate = \Validator::make($params_array, [
+                'cliente_id'       => 'required|numeric',
+                'fecha'           => 'required|date',
+                'numeroempleadosreservados' => 'required|numeric'
+        ]);
+        
+        return Cita::store($request, $validate, $params_array);  
     }
     
     /**
@@ -80,9 +89,9 @@ class CitaController extends Controller
      * @return Response
      */
     public function update(Request $request)
-    {
+    { 
         $params_array = $this ->conversionRequestToArray($request);
-        
+      
         $cita = \App\Cita::find($params_array['id']);
        
         if(!empty($cita) & $cita->NumeroEmpleadosAsistentes == 0){

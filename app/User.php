@@ -139,5 +139,4 @@ class User extends Authenticatable {
             return "El usuario no se ha podido guardar.";
         }
     }
-
 }

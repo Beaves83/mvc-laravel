@@ -70,7 +70,7 @@ class Cliente extends Model {
             return "El cliente no puede ser modificado.";
         } 
     }
-
+    
     //Conversión Request a Array.
     public function conversionRequestToArray(Request $request) {
         $json = $request->input('json', null);
@@ -79,6 +79,12 @@ class Cliente extends Model {
         $params_array = array_map('trim', $params_array);
 
         return $params_array;
+    }
+    
+    public static function listado(){
+        //$clientes = DB::table('clientes')->get()->take(30);
+        //return response() -> json($clientes); 
+        return response() -> json(Cliente::get()->take(30)); 
     }
 
 }
