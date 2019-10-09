@@ -7,7 +7,7 @@
         <h1>Citas médicas</h1>
     </center>
 
-    <table border="0" cellspacing="5" cellpadding="5">
+<!--    <table border="0" cellspacing="5" cellpadding="5">
         <tbody>
             <tr class="col-12">
                 <td>Fechas:</td>
@@ -51,8 +51,8 @@
             </tr>
         </tbody>
     </table>
-    
-    <table id="tablacitas" class="table table-bordered table-striped">
+    -->
+    <table id="tablacitas" class="table table-bordered table-striped display nowrap">
         <thead>
             <tr>    
                 <th>Cliente</th>

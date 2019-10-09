@@ -7,7 +7,7 @@
         <h1>Clientes</h1>
     </center>
 
-    <table border="0" cellspacing="5" cellpadding="5">
+<!--    <table  border="0" cellspacing="5" cellpadding="5" class="display">
         <tbody>
             <tr>
                 <td>Razón social:</td>
@@ -36,7 +36,7 @@
                     Exportar:
                 </td>
                 <td>
-                    <button type="button" class="btn btn-outline-success" href="{{ URL::asset('clientes/excel') }}">Excel</button>
+                    <button type="button" class="btn btn-outline-success" href="{{ route('clientes.excel', $cliente) }}">Excel</button>
                 </td>
                 <td>
                     <button type="button" class="btn btn-outline-danger">Pdf</button>
@@ -44,8 +44,8 @@
                 
             </tr>
         </tbody>
-    </table>
-    <table id="example" class="table table-striped table-bordered" >
+    </table>-->
+    <table id="tablaclientes" class="table table-striped table-bordered display nowrap" >
         <thead>
             <tr>
                 <th>Codigo</th>

@@ -31,7 +31,7 @@ class Cita extends Model
     public static function reservartionsWithClient(){
         $citas = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
                 ->select('citas.*','clientes.razonsocial')
-                ->get()->take(30);
+                ->get(); //->take(30)
         
         return $citas;
     }

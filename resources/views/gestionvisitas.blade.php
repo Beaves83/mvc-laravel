@@ -7,7 +7,6 @@
         <h1>Visita médica</h1>
     </center>
     <center>
-
         <div class="input-group mb-3 center-block">
             <div class="input-group-prepend">
                 <button class="btn btn-outline-secondary" type="button">Button</button>
@@ -19,12 +18,10 @@
                 <option value="fecha3">fecha3</option>
             </select>
         </div>
-
-
     </center>
 
     <center>
-        <table class="table table-striped col-5 mb-3">
+        <table id="tablavisitas" class="table table-striped col-5 mb-3 display nowrap">
             <tbody>
                 <tr>
                     <td colspan="1">

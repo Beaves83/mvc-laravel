@@ -5,11 +5,11 @@ Route::get('/', function () {
 });
 
 //Clientes
-Route::get('clientes', 'ClienteController@index');//->middleware(ApiAuthMiddleware::class);
-Route::get('clientes/create', 'ClienteController@create');
+Route::get('clientes', 'ClienteController@index')->name('clientes.index');//->middleware(ApiAuthMiddleware::class);
+Route::get('clientes/create', 'ClienteController@create')->name('clientes.create');
 Route::get('clientes/store', 'ClienteController@store');
 Route::get('clientes/all', 'ClienteController@all');
-Route::get('clientes/excel', 'ClienteController@toexcel');
+Route::post('clientes/excel', 'ClienteController@toexcel')->name('clientes.excel');
 Route::get('clientes/{cliente}', 'ClienteController@show');
 Route::get('clientes/{cliente}/edit', 'ClienteController@edit');
 Route::get('clientes/update/{cliente}', 'ClienteController@update');
