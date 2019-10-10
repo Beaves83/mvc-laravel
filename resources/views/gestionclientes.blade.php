@@ -7,44 +7,6 @@
         <h1>Clientes</h1>
     </center>
 
-<!--    <table  border="0" cellspacing="5" cellpadding="5" class="display">
-        <tbody>
-            <tr>
-                <td>Razón social:</td>
-    
-                <td style="width:350px">
-                    <select name="razonsocial" id="razonsocial" class="form-control col-md-8"  required>
-                        <option value="">Elige una cliente</option>
-                        @foreach($clientes as $cliente)
-                        <option value="{{ $cliente->id }}">{{ $cliente->razonsocial }}</option>
-                        @endforeach
-                    </select>
-                </td >
-                <td>Municipio</td>
-                <td style="width:350px">
-                    <select name="municipio" id="municipio" class="form-control col-md-8" required>
-                        <option value="">Elige un municipio</option>
-                        @foreach($clientes as $cliente)
-                        <option value="{{ $cliente->id }}">{{ $cliente->municipio }}</option>
-                        @endforeach
-                    </select>
-                </td>
-                <td style="width:100px">
-                    <button class='btn btn-primary'>Filtrar</button>
-                </td>
-                <td style="width:100px">
-                    Exportar:
-                </td>
-                <td>
-                    <button type="button" class="btn btn-outline-success" href="{{ route('clientes.excel', $cliente) }}">Excel</button>
-                </td>
-                <td>
-                    <button type="button" class="btn btn-outline-danger">Pdf</button>
-                </td>
-                
-            </tr>
-        </tbody>
-    </table>-->
     <table id="tablaclientes" class="table table-striped table-bordered display nowrap" >
         <thead>
             <tr>
@@ -80,11 +42,4 @@
         </tbody>
     </table>
 </div>
-
-<script>
-//$(document).ready(function() {
-//    $('#example').DataTable();
-//} );
-
-</script>
 @endsection
