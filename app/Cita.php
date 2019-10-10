@@ -6,7 +6,6 @@ namespace App;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
-use App\Cliente;
 use App\Cita;
 
 class Cita extends Model
