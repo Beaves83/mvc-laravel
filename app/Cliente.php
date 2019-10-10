@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class Cliente extends Model {
 
@@ -82,8 +81,6 @@ class Cliente extends Model {
     }
     
     public static function listado(){
-        //$clientes = DB::table('clientes')->get()->take(30);
-        //return response() -> json($clientes); 
         return response() -> json(Cliente::get()->take(30)); 
     }
 
