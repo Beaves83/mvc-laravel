@@ -10,7 +10,7 @@ use App\Http\Requests\ValidacionesCliente;
 class ClienteController extends Controller
 {
     /**
-     * Devuelve la vista con los clientes.
+     * Default page for showing all the clients.
      *
      * @return Response
      */
@@ -27,9 +27,9 @@ class ClienteController extends Controller
      *
      * @return Response
      */
-    public function create(Request $request)
+    public function create()
     {
-        
+        return view('clientes.create');
     }
 
     /**
@@ -38,12 +38,52 @@ class ClienteController extends Controller
      * @param  Request  $request
      * @return Response
      */ 
-    public function store(ValidacionesCliente $request)
+    public function store()
     {   
-        dd("Estamos dentro del controlador del cliente ");
-        //return Cliente::store($request, $validate, $params_array);
-        return $request;
-        //return Cliente::store($request, $validate, $params_array);
+        // validate
+        // read more on validation at http://laravel.com/docs/validation
+        $rules = array(
+            'codigo'                => 'required|alpha_num|unique:cliente|max:15',
+            'razonsocial'           => 'required|unique:cliente|max:15',
+            'cif'                   => 'required|alpha_num|unique:cliente|max:15',
+            'direccion'             => 'required|max:100',
+            'municipio'             => 'required|max:100',
+            'provincia'             => 'required|max:100',
+            'fechainiciocontrato'   => 'required|date',
+            'fechafincontrato'      => 'required|date',
+            'numeroreconocimientoscontratados'    => 'required|numeric'
+        );
+        $validator = Validator::make(Input::all(), $rules);
+
+        // process the login
+        if ($validator->fails()) {
+            return Redirect::to('nerds/create')
+                ->withErrors($validator)
+                ->withInput(Input::except('password'));
+        } else {
+            // store
+            $nerd = new Nerd;
+            $nerd->name       = Input::get('name');
+            $nerd->email      = Input::get('email');
+            $nerd->nerd_level = Input::get('nerd_level');
+            $nerd->save();
+            
+            $cliente = new Cliente();
+            $cliente->codigo                            = Input::get('codigo');
+            $cliente->razonsocial                       = Input::get('razonsocial');
+            $cliente->cif                               = Input::get('cif');
+            $cliente->direccion                         = Input::get('direccion');
+            $cliente->municipio                         = Input::get('municipio');
+            $cliente->provincia                         = Input::get('provincia');
+            $cliente->fechainiciocontrato               = Input::get('fechainiciocontrato');
+            $cliente->fechafincontrato                  = Input::get('fechafincontrato');
+            $cliente->numeroreconocimientoscontratados  = Input::get('numeroreconocimientoscontratados');
+            $cliente->save();
+
+            // redirect
+            Session::flash('message', '¡Cliente creado!');
+            return Redirect::to('clientes');
+        }
     }
     
     

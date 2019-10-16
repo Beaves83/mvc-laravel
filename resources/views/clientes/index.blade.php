@@ -26,20 +26,33 @@
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
-            <td>ID</td>
+            <td>Código</td>
             <td>Razón social</td>
             <td>Cif</td>
             <td>Dirección</td>
+            <td>Municipio</td>
+            <td>Provincia</td>
+            <td>Fecha inicio contrato</td>
+            <td>Fecha fin contrato</td>
+            <td>Reconocimientos contratados</td>
+            <td>Reconocimientos usados</td>           
             <td>Acciones</td>
         </tr>
     </thead>
     <tbody>
     @foreach($clientes as $key => $value)
         <tr>
-            <td>{{ $value->id }}</td>
+            <td>{{$value->codigo}}</td>
             <td>{{ $value->razonsocial }}</td>
             <td>{{ $value->cif }}</td>
             <td>{{ $value->direccion }}</td>
+            <td>{{ $value->municipio }}</td>
+            <td>{{ $value->provincia }}</td>
+            <td>{{ $value->fechainiciocontrato }}</td>
+            <td>{{ $value->fechafincontrato }}</td>     
+            <td>{{ $value->numeroreconocimientoscontratados }}</td>
+            <td>{{ $value->numeroreconocimientosutilizados }}</td>
+            
 
             <!-- Mostrarmos los botones de mostrar, ediar y borrar -->
             <td>
