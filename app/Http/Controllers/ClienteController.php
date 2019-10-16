@@ -16,8 +16,10 @@ class ClienteController extends Controller
      */
     public function index()
     {
-        $clientes = Cliente::get();
-        return view('gestionclientes', compact('clientes'));
+        $clientes = Cliente::all();
+        return view('clientes.index')->with('clientes', $clientes);
+        //return view('gestionclientes', compact('clientes'));
+        //return View::make('gestionclientes')->with('clientes', $clientes);
     }
 
     /**
@@ -35,33 +37,11 @@ class ClienteController extends Controller
      *
      * @param  Request  $request
      * @return Response
-     */
-    public function storeOld(Request $request)
-    {   
-        dd($request->codigo);
-        $json = $request->input('json', null);
-        dd($json);
-        $params_array = array_map('trim', json_decode($json, true));
-        
-        $validate = \Validator::make($params_array, [
-                'codigo'                => 'required|alpha_num|unique:cliente|max:15',
-                'razonsocial'           => 'required|unique:cliente|max:15',
-                'cif'                   => 'required|alpha_num|unique:cliente|max:15',
-                'direccion'             => 'required|max:100',
-                'municipio'             => 'required|max:100',
-                'provincia'             => 'required|max:100',
-                'fechainiciocontrato'   => 'required|date',
-                'fechafincontrato'      => 'required|date',
-                'numeroreconocimientoscontratados'    => 'required|numeric'
-        ]);
-        
-        return Cliente::store($request, $validate, $params_array);
-    }
-    
+     */ 
     public function store(ValidacionesCliente $request)
     {   
         dd("Estamos dentro del controlador del cliente ");
-        
+        //return Cliente::store($request, $validate, $params_array);
         return $request;
         //return Cliente::store($request, $validate, $params_array);
     }
@@ -136,5 +116,25 @@ class ClienteController extends Controller
         $json = $request -> input('json', null);
         $params_array = json_decode($json, true);
         return $params_array;
+    }
+    
+    public function storeOld(Request $request)
+    {          
+        $json = $request->input('json', null);
+        $params_array = array_map('trim', json_decode($json, true));
+        
+        $validate = \Validator::make($params_array, [
+                'codigo'                => 'required|alpha_num|unique:cliente|max:15',
+                'razonsocial'           => 'required|unique:cliente|max:15',
+                'cif'                   => 'required|alpha_num|unique:cliente|max:15',
+                'direccion'             => 'required|max:100',
+                'municipio'             => 'required|max:100',
+                'provincia'             => 'required|max:100',
+                'fechainiciocontrato'   => 'required|date',
+                'fechafincontrato'      => 'required|date',
+                'numeroreconocimientoscontratados'    => 'required|numeric'
+        ]);
+        
+        return Cliente::store($request, $validate, $params_array);
     }
 }

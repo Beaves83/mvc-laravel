@@ -32,3 +32,6 @@ Route::get('usuarios/register', 'UserController@register')->name('usuarios.regis
 Route::put('usuarios/update', 'UserController@update')->name('usuarios.update');
 Route::post('usuarios/store', 'UserController@store')->name('usuarios.store');
 Route::delete('usuarios/destroy/{id}', 'UserController@destroy')->name('usuarios.destroy');
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
