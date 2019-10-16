@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Cliente;
 use Illuminate\Http\Response;
+use App\Http\Requests\ValidacionesCliente;
 
 class ClienteController extends Controller
 {
@@ -35,9 +36,11 @@ class ClienteController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function storeOld(Request $request)
     {   
+        dd($request->codigo);
         $json = $request->input('json', null);
+        dd($json);
         $params_array = array_map('trim', json_decode($json, true));
         
         $validate = \Validator::make($params_array, [
@@ -54,6 +57,15 @@ class ClienteController extends Controller
         
         return Cliente::store($request, $validate, $params_array);
     }
+    
+    public function store(ValidacionesCliente $request)
+    {   
+        dd("Estamos dentro del controlador del cliente ");
+        
+        return $request;
+        //return Cliente::store($request, $validate, $params_array);
+    }
+    
     
     /**
      * Devuelve un listado completo con todas las citas.

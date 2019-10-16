@@ -18,23 +18,13 @@ class ClienteTest extends TestCase
     protected function setUp()
     {
         parent::setUp();
-
         $this->cliente = factory(Cliente::class)->create();
     }
     
     /** @test */
-//    public function testObtenerClientes()
-//    {       
-//        $response = $this
-//            ->postJson(route('clientes.all'));
-//        
-//        $response->assertStatus(500);
-//    }
-    
-    /** @test */
     public function testListadoClientes()
     {       
-        $response = $this->get("/clientes/all"); //.$this->faker->numberBetween(0,50)
+        $response = $this->get(route('clientes.all')); //.$this->faker->numberBetween(0,50)
         $response->assertStatus(200);
     }
     
@@ -56,9 +46,11 @@ class ClienteTest extends TestCase
             'activo'=> $this->faker->boolean,
             'numeroreconocimientosutilizados' => $this->faker->numberBetween(0,500)
         ];  
+        
         $response = $this
             ->postJson(route('clientes.store'), $data);
         
-        $response->assertStatus(500);
+        //dd($response);
+        $response->assertStatus(200);
     }
 }

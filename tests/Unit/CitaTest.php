@@ -8,13 +8,10 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CitaTest extends TestCase
 {
-    /**
-     * A basic unit test example.
-     *
-     * @return void
-     */
-    public function testExample()
-    {
-        $this->assertTrue(true);
+    /** @test */
+    public function testListadoCitas()
+    {       
+        $response = $this->get(route('citas.store')); //.$this->faker->numberBetween(0,50)
+        $response->assertStatus(200);
     }
 }
