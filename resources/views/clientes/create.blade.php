@@ -1,29 +1,17 @@
-<!--https://laravel.com/docs/4.2/html-->
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Look! I'm CRUDding</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
+@extends('layouts.app')
 
-<nav class="navbar navbar-inverse">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="{{ URL::to('clientes') }}">Alerta cliente</a>
-    </div>
-    <ul class="nav navbar-nav">
-        <li><a href="{{ URL::to('clientes') }}">Listado clientes</a></li>
-        <li><a href="{{ URL::to('clientes/create') }}">Crear un cliente</a>
-    </ul>
-</nav>
+@section('title', 'Crear un cliente')
 
-<h1>Crear un cliente</h1>
-
+@section('content')
 <!-- if there are creation errors, they will show here -->
 {{ Html::ul($errors->all()) }}
 
 {{ Form::open(array('url' => 'clientes')) }}
+
+    <div class="form-group">
+        {{ Form::label('codigo', 'Código') }}
+        {{ Form::text('codigo') }}
+    </div>
 
     <div class="form-group">
         {{ Form::label('razonsocial', 'Razon social') }}
@@ -31,15 +19,43 @@
     </div>
 
     <div class="form-group">
+        {{ Form::label('cif', 'CIF/NIF') }}
+        {{ Form::text('cif') }}
+    </div>
+
+    <div class="form-group">
         {{ Form::label('direccion', 'Dirección') }}
         {{ Form::text('direccion') }}
     </div>
 
+    <div class="form-group">
+        {{ Form::label('municipio', 'Municipio') }}
+        {{ Form::select('size', array('L' => 'Huercal', 'S' => 'Viator'), 'L') }}
+    </div>
+
+    <div class="form-group">
+        {{ Form::label('provincia', 'Provincia') }}
+        {{ Form::select('size', array('L' => 'Almeria', 'S' => 'Granada'), 'L') }}
+    </div>
+
+    <div class="form-group">
+        {{ Form::label('fechainiciocontrato', 'Fecha inicio de contrato') }}
+        {{ Form::date('fechainiciocontrato') }}
+    </div>
+
+    <div class="form-group">
+        {{ Form::label('fechafincontrato', 'Fecha fin de contrato') }}
+        {{ Form::date('fechafincontrato') }}
+    </div> 
+
+    <div class="form-group">
+        {{ Form::label('numeroreconocimientoscontratados', 'Reconocimiento a contratar') }}
+        {{ Form::number('numeroreconocimientoscontratados') }}
+    </div>
 
     {{ Form::submit('¡Crear un cliente!') }}
 
 {{ Form::close() }}
 
 </div>
-</body>
-</html>
+@endsection

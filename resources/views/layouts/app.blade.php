@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'GRM') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    {{ config('app.name', 'GRM') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -33,13 +33,42 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @guest
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('clientes') }}">Listado clientes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('citas') }}">Listado citas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('usuarios') }}">Listado usuarios</a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('clientes') }}">Listado clientes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('clientes/create') }}">Crear un cliente</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('citas') }}">Listado citas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('citas/create') }}">Crear una cita</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('usuarios') }}">Listado usuarios</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('usuarios/create') }}">Crear un usuario</a>
+                            </li>
+                        @endguest
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                        @guest
+                        @guest                           
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                             </li>

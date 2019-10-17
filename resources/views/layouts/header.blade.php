@@ -52,6 +52,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ URL::asset('citas/1') }}">Visitas</a>
                     </li>
+                    <li><a href="{{ URL::to('clientes') }}">Listado clientes</a></li>
+                    <li><a href="{{ URL::to('clientes/create') }}">Crear un cliente</a></li>
                 </ul>
             </div>
         </nav>

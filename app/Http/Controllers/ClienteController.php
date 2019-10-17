@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Cliente;
 use Illuminate\Http\Response;
 use App\Http\Requests\ValidacionesCliente;
+use Illuminate\Support\Facades\Input;
 
 class ClienteController extends Controller
 {
@@ -53,35 +54,37 @@ class ClienteController extends Controller
             'fechafincontrato'      => 'required|date',
             'numeroreconocimientoscontratados'    => 'required|numeric'
         );
-        $validator = Validator::make(Input::all(), $rules);
-
+        $validator = \Validator::make(Input::all(), $rules);
+        
         // process the login
         if ($validator->fails()) {
-            return Redirect::to('nerds/create')
+            dd("La validación ha fallado");
+            return Redirect::to('clientes/create')
                 ->withErrors($validator)
                 ->withInput(Input::except('password'));
         } else {
-            // store
-            $nerd = new Nerd;
-            $nerd->name       = Input::get('name');
-            $nerd->email      = Input::get('email');
-            $nerd->nerd_level = Input::get('nerd_level');
-            $nerd->save();
-            
-            $cliente = new Cliente();
-            $cliente->codigo                            = Input::get('codigo');
-            $cliente->razonsocial                       = Input::get('razonsocial');
-            $cliente->cif                               = Input::get('cif');
-            $cliente->direccion                         = Input::get('direccion');
-            $cliente->municipio                         = Input::get('municipio');
-            $cliente->provincia                         = Input::get('provincia');
-            $cliente->fechainiciocontrato               = Input::get('fechainiciocontrato');
-            $cliente->fechafincontrato                  = Input::get('fechafincontrato');
-            $cliente->numeroreconocimientoscontratados  = Input::get('numeroreconocimientoscontratados');
-            $cliente->save();
-
-            // redirect
-            Session::flash('message', '¡Cliente creado!');
+        dd("La validación es correcta y vamos a guardar.");            
+// store
+//            $nerd = new Nerd;
+//            $nerd->name       = Input::get('name');
+//            $nerd->email      = Input::get('email');
+//            $nerd->nerd_level = Input::get('nerd_level');
+//            $nerd->save();
+//            
+//            $cliente = new Cliente();
+//            $cliente->codigo                            = Input::get('codigo');
+//            $cliente->razonsocial                       = Input::get('razonsocial');
+//            $cliente->cif                               = Input::get('cif');
+//            $cliente->direccion                         = Input::get('direccion');
+//            $cliente->municipio                         = Input::get('municipio');
+//            $cliente->provincia                         = Input::get('provincia');
+//            $cliente->fechainiciocontrato               = Input::get('fechainiciocontrato');
+//            $cliente->fechafincontrato                  = Input::get('fechafincontrato');
+//            $cliente->numeroreconocimientoscontratados  = Input::get('numeroreconocimientoscontratados');
+//            $cliente->save();
+//
+//            // redirect
+//            Session::flash('message', '¡Cliente creado!');
             return Redirect::to('clientes');
         }
     }

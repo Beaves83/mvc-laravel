@@ -4,6 +4,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Auth::routes();
+
 //Clientes
 Route::get('clientes', 'ClienteController@index')->name('clientes.index');//->middleware(ApiAuthMiddleware::class);
 Route::get('clientes/create', 'ClienteController@create')->name('clientes.create');

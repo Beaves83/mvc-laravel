@@ -1,23 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>CLIENTES</title>
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-</head>
-<body>
-<div class="container">
+@extends('layouts.app')
 
-<nav class="navbar navbar-inverse">
-    <div class="navbar-header">
-        <a class="navbar-brand" href="{{ URL::to('clientes') }}">Mensaje</a>
-    </div>
-    <ul class="nav navbar-nav">
-        <li><a href="{{ URL::to('clientes') }}">Todos los clientes</a></li>
-        <li><a href="{{ URL::to('clientes/create') }}">Crear un cliente</a>
-    </ul>
-</nav>
+@section('title', 'Clientes')
 
-<h1>Clientes</h1>
+@section('content')
 
 @if (Session::has('message'))
     <div class="alert alert-info">{{ Session::get('message') }}</div>
@@ -67,5 +52,4 @@
 </table>
 
 </div>
-</body>
-</html>
+@endsection
