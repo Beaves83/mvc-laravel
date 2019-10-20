@@ -2,7 +2,7 @@ $(document).ready( function () {
     
     //#region TablaClientes
     
-    $('#tablaclientes thead tr').clone(true).appendTo( '#tablaclientes thead' );
+//    $('#tablaclientes thead tr').clone(true).appendTo( '#tablaclientes thead' );
     $('#tablaclientes thead tr:eq(1) th').each( function (i) {
         var title = $(this).text();
         $(this).html( '<input type="text" placeholder="Search '+title+'" />' );

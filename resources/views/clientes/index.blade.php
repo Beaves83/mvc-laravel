@@ -7,8 +7,8 @@
 @if (Session::has('message'))
     <div class="alert alert-info">{{ Session::get('message') }}</div>
 @endif
-
-<table class="table table-striped table-bordered">
+<div class="container">
+    <table id="tablaclientes" class="table table-striped table-bordered display nowrap">
     <thead>
         <tr>
             <td>Código</td>
@@ -38,7 +38,6 @@
             <td>{{ $value->numeroreconocimientoscontratados }}</td>
             <td>{{ $value->numeroreconocimientosutilizados }}</td>
             
-
             <!-- Mostrarmos los botones de mostrar, ediar y borrar -->
             <td>
                 <a class="btn btn-small btn-danger" href="{{ URL::to('clientes/' . $value->id) }}">Eliminar</a>
@@ -50,6 +49,6 @@
     @endforeach
     </tbody>
 </table>
-
+</div>
 </div>
 @endsection
