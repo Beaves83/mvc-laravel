@@ -11,8 +11,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {      
-        factory(App\Cliente::class, 500)->create();
-        factory(App\Cita::class, 3000)->create();
-        factory(App\User::class, 300)->create();
+        factory(App\Cliente::class, 200)->create();
+        factory(App\Cita::class, 500)->create();
+        factory(App\User::class, 100)->create();
+        
+        //Poblados los datos necesarios para los formularios
+        $this->call('PaisesSeeder');
+        $this->call('ComunidadesAutonomasSeeder');
+        $this->call('ProvinciasSeeder');
+        $this->call('MunicipiosSeeder');
     }
 }

@@ -30,8 +30,13 @@
 
     <div class="form-group">
         {{ Form::label('municipio', 'Municipio') }}
-        {{ Form::select('size', array('L' => 'Huercal', 'S' => 'Viator'), 'L') }}
+        {{ Form::select('municipios', array('L' => 'Huercal', 'S' => 'Viator'), 'L') }}
     </div>
+
+<!--    <div id="municipios" class="form-group">
+        {{ Form::label('municipio', 'Municipio') }}
+        {{ Form::select('size', array('L' => 'Huercal', 'S' => 'Viator'), 'L') }}
+    </div>-->
 
     <div class="form-group">
         {{ Form::label('provincia', 'Provincia') }}

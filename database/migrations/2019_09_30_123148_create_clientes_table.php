@@ -26,7 +26,7 @@ class CreateClientesTable extends Migration
             $table->date("fechafincontrato");
             $table->date("fechainiciocontrato");
             $table->integer("numeroreconocimientoscontratados");
-            $table->integer("numeroreconocimientosutilizados")->default(1);
+            $table->integer("numeroreconocimientosutilizados")->default(0);
             $table->boolean("activo")->default(FALSE);            
         });
         

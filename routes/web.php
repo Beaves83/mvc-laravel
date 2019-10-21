@@ -36,4 +36,7 @@ Route::post('usuarios/store', 'UserController@store')->name('usuarios.store');
 Route::delete('usuarios/destroy/{id}', 'UserController@destroy')->name('usuarios.destroy');
 Auth::routes();
 
+//Listados
+Route::get('municipios', 'MunicipioController@index');
+
 Route::get('/home', 'HomeController@index')->name('home');
