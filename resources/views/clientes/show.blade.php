@@ -12,8 +12,8 @@
             <strong>Codigo:</strong> {{ $cliente->codigo }}<br>
             <strong>CIF/NIF:</strong> {{ $cliente->cif}}<br>
             <strong>Dirección:</strong> {{ $cliente->direccion}}<br>
-            <strong>Municipio:</strong> {{ $cliente->municipio}}<br>
-            <strong>Provincia:</strong> {{ $cliente->provincia}}<br>
+            <strong>Municipio:</strong> {{ $cliente->city_name}}<br>
+            <strong>Provincia:</strong> {{ $cliente->region_name}}<br>
             <strong>Inicio contrado:</strong> {{ $cliente->fechainiciocontrato}}<br>
             <strong>Fin contrato:</strong> {{ $cliente->fechafincontrato}}<br>
             <strong>Reconocimientos contratados:</strong> {{ $cliente->numeroreconocimientoscontratados}}<br>

@@ -6,6 +6,7 @@ use App\Cliente;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
 
+
 class ClienteController extends Controller {
 
     /**
@@ -14,7 +15,7 @@ class ClienteController extends Controller {
      * @return a view with and the list of the clients.
      */
     public function index() {
-        $clientes = Cliente::all();
+        $clientes = Cliente::informacionCompleta();   
         return view('clientes.index')->with('clientes', $clientes);
     }
 
@@ -77,9 +78,10 @@ class ClienteController extends Controller {
      * @param  int $id
      * @return a view.
      */
-    public function show($id) {
-        $cliente = Cliente::find($id);
-        return view('clientes.show', array('cliente' => $cliente));
+    public function show($id) {       
+        $cliente = Cliente::getCliente($id);
+        return view('clientes.show')->with('cliente', $cliente[0]); 
+        
     }
 
     /**
