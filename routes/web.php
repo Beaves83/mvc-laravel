@@ -38,5 +38,6 @@ Auth::routes();
 
 //Listados
 Route::get('municipios', 'MunicipioController@index');
+Route::get('provincias', 'ProvinciaController@index');
 
 Route::get('/home', 'HomeController@index')->name('home');

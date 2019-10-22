@@ -10,7 +10,5 @@ class MunicipioController extends Controller
     {
         $municipios = Municipio::all();
         return $municipios;
-        //return view('gestionclientes', compact('clientes'));
-        //return View::make('gestionclientes')->with('clientes', $clientes);
     }
 }

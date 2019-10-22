@@ -1,14 +1,24 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Cliente  #{{ $cliente->id }}</title>
-  </head>
-  <body>
-    <h1>Cliente {{ $cliente->id }}</h1>
-    <ul>
-      <li>Codigo: {{ $cliente->codigo }}</li>
-      <li>Razón social: {{ $cliente->razonsocial}}</li>
-      <li>CIF: {{ $cliente->cif }}</li>
-    </ul>
-  </body>
-</html>
+@extends('layouts.app')
+
+@section('title', 'Crear un cliente')
+
+@section('content')
+
+    <h1>Cliente: {{ $cliente->razonsocial }}</h1>
+    
+    <div class="jumbotron text-center">
+        <h2>{{ $cliente->codigo }} - {{ $cliente->razonsocial }}</h2>
+        <p>
+            <strong>Codigo:</strong> {{ $cliente->codigo }}<br>
+            <strong>CIF/NIF:</strong> {{ $cliente->cif}}<br>
+            <strong>Dirección:</strong> {{ $cliente->direccion}}<br>
+            <strong>Municipio:</strong> {{ $cliente->municipio}}<br>
+            <strong>Provincia:</strong> {{ $cliente->provincia}}<br>
+            <strong>Inicio contrado:</strong> {{ $cliente->fechainiciocontrato}}<br>
+            <strong>Fin contrato:</strong> {{ $cliente->fechafincontrato}}<br>
+            <strong>Reconocimientos contratados:</strong> {{ $cliente->numeroreconocimientoscontratados}}<br>
+            <strong>Reconocimientos realizados:</strong> {{ $cliente->numeroreconocimientosutilizados}}<br>
+        </p>
+    </div>
+    
+@endsection

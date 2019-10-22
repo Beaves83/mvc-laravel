@@ -2,139 +2,139 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Cliente;
 use Illuminate\Http\Response;
-use App\Http\Requests\ValidacionesCliente;
 use Illuminate\Support\Facades\Input;
 
-class ClienteController extends Controller
-{
+class ClienteController extends Controller {
+
     /**
-     * Default page for showing all the clients.
+     * Default page for showing all the list.
      *
-     * @return Response
+     * @return a view with and the list of the clients.
      */
-    public function index()
-    {
+    public function index() {
         $clientes = Cliente::all();
         return view('clientes.index')->with('clientes', $clientes);
-        //return view('gestionclientes', compact('clientes'));
-        //return View::make('gestionclientes')->with('clientes', $clientes);
     }
 
     /**
      * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return a view
      */
-    public function create()
-    {
+    public function create() {
         return view('clientes.create');
     }
 
     /**
-     * Guarda un cliente.
-     *
-     * @param  Request  $request
-     * @return Response
-     */ 
-    public function store()
-    {   
-        // validate
-        // read more on validation at http://laravel.com/docs/validation
-        $rules = array(
-            'codigo'                => 'required|alpha_num|unique:cliente|max:15',
-            'razonsocial'           => 'required|unique:cliente|max:15',
-            'cif'                   => 'required|alpha_num|unique:cliente|max:15',
-            'direccion'             => 'required|max:100',
-            'municipio'             => 'required|max:100',
-            'provincia'             => 'required|max:100',
-            'fechainiciocontrato'   => 'required|date',
-            'fechafincontrato'      => 'required|date',
-            'numeroreconocimientoscontratados'    => 'required|numeric'
-        );
-        $validator = \Validator::make(Input::all(), $rules);
-        
-        // process the login
-        if ($validator->fails()) {
-            dd("La validación ha fallado");
-            return Redirect::to('clientes/create')
-                ->withErrors($validator)
-                ->withInput(Input::except('password'));
-        } else {
-        dd("La validación es correcta y vamos a guardar.");            
-// store
-//            $nerd = new Nerd;
-//            $nerd->name       = Input::get('name');
-//            $nerd->email      = Input::get('email');
-//            $nerd->nerd_level = Input::get('nerd_level');
-//            $nerd->save();
-//            
-//            $cliente = new Cliente();
-//            $cliente->codigo                            = Input::get('codigo');
-//            $cliente->razonsocial                       = Input::get('razonsocial');
-//            $cliente->cif                               = Input::get('cif');
-//            $cliente->direccion                         = Input::get('direccion');
-//            $cliente->municipio                         = Input::get('municipio');
-//            $cliente->provincia                         = Input::get('provincia');
-//            $cliente->fechainiciocontrato               = Input::get('fechainiciocontrato');
-//            $cliente->fechafincontrato                  = Input::get('fechafincontrato');
-//            $cliente->numeroreconocimientoscontratados  = Input::get('numeroreconocimientoscontratados');
-//            $cliente->save();
-//
-//            // redirect
-//            Session::flash('message', '¡Cliente creado!');
-            return Redirect::to('clientes');
-        }
-    }
-    
-    
-    /**
-     * Devuelve un listado completo con todas las citas.
+     * Save the specified resource.
      *
      * @return Response
      */
-    public function all()
-    {       
-//        $clientes = DB::table('clientes')->get()->take(30);
-//        return response() -> json($clientes); 
-        return Cliente::listado();
+    public function store() {
+        $rules = array(
+            'codigo' => 'required|alpha_num|unique:clientes|max:190',
+            'razonsocial' => 'required|unique:clientes|max:190',
+            'cif' => 'required|alpha_num|unique:clientes|max:15',
+            'direccion' => 'required|max:100',
+            'municipios' => 'max:100',
+            'provincias' => 'max:100',
+            'fechainiciocontrato' => 'required|date',
+            'fechafincontrato' => 'required|date',
+            'numeroreconocimientoscontratados' => 'required|numeric'
+        );
+        $validator = \Validator::make(Input::all(), $rules);
+
+        if ($validator->fails()) {
+            return \Redirect::to('clientes/create')
+                            ->withErrors($validator)
+                            ->withInput(Input::except('password'));
+        } else {
+         
+            $cliente = new Cliente();
+
+            $cliente->codigo = Input::get('codigo');
+            $cliente->razonsocial = Input::get('razonsocial');
+            $cliente->cif = Input::get('cif');
+            $cliente->direccion = Input::get('direccion');
+            $cliente->municipio = Input::get('municipios');
+            $cliente->provincia = Input::get('provincias');
+            $cliente->fechainiciocontrato = Input::get('fechainiciocontrato');
+            $cliente->fechafincontrato = Input::get('fechafincontrato');
+            $cliente->numeroreconocimientoscontratados = Input::get('numeroreconocimientoscontratados');
+
+            $cliente->save();
+
+            \Session::flash('message', '¡Cliente creado!');
+            return \Redirect::to('clientes');
+        }
     }
 
     /**
-     * Muestra un cliente especifico.
+     * Show the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @param  int $id
+     * @return a view.
      */
-    public function show($id)
-    {
+    public function show($id) {
         $cliente = Cliente::find($id);
         return view('clientes.show', array('cliente' => $cliente));
     }
 
     /**
-     * Devuelve una cita
+     * Return the view of the specified resource to edit.
      *
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
-    {
-        return \App\Cliente::find($id);
+    public function edit($id) {
+        $cliente = Cliente::find($id);
+        return view("clientes.edit")->with('cliente', $cliente);
     }
 
     /**
-     * Actualizamos un cliente.
+     * Update the specified resource from storage.
      *
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request)
-    {
-        $params_array = $this ->conversionRequestToArray($request);
-        return Cliente::updateClient($request, $params_array);
+    public function update($id) {
+        $rules = array(
+            'codigo' => 'required|alpha_num|max:190|unique:clientes,codigo,' . $id . ',id',
+            'razonsocial' => 'max:190|unique:clientes,razonsocial,' . $id . ',id',
+            'cif' => 'alpha_num|max:15|unique:clientes,cif,' . $id . ',id',
+            'direccion' => 'required|max:100',
+            'municipios' => 'max:100',
+            'provincias' => 'max:100',
+            'fechainiciocontrato' => 'required|date',
+            'fechafincontrato' => 'required|date',
+            'numeroreconocimientoscontratados' => 'required|numeric'
+        );
+        
+        $validator = Validator(Input::all(), $rules);
+
+        if ($validator->fails()) {
+            return \Redirect::to('clientes/' . $id . '/edit')
+                            ->withErrors($validator)
+                            ->withInput(Input::except('password'));
+        } else {
+            Cliente::where('id', $id)
+                    ->update(
+                            [
+                                'codigo' => Input::get('codigo'),
+                                'razonsocial' => Input::get('razonsocial'),
+                                'cif' => Input::get('cif'),
+                                'direccion' => Input::get('direccion'),
+//                                'municipio' => Input::get('municipios'),
+//                                'provincia' => Input::get('provincias'),
+                                'fechainiciocontrato' => Input::get('fechainiciocontrato'),
+                                'fechafincontrato' => Input::get('fechafincontrato'),
+                                'numeroreconocimientoscontratados' => Input::get('numeroreconocimientoscontratados')
+            ]);
+            \Session::flash('message', 'Cliente actualizado');
+            return \Redirect::to('clientes');
+        }
     }
 
     /**
@@ -143,41 +143,13 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
-    {
-        //
+    public function destroy($id) {
+        // delete
+        $cliente = Cliente::find($id);
+        $cliente->delete();
+
+        \Session::flash('message', 'El cliente ' . $cliente->codigo . ' ha sido eliminado.');
+        return \Redirect::to('clientes');
     }
-    
-    
-    public function toexcel(Request $request){
-        $params_array = $this ->conversionRequestToArray($request);
-        dd($request);
-    }
-    
-    //Conversión Request a Array.
-    public function conversionRequestToArray(Request $request){
-        $json = $request -> input('json', null);
-        $params_array = json_decode($json, true);
-        return $params_array;
-    }
-    
-    public function storeOld(Request $request)
-    {          
-        $json = $request->input('json', null);
-        $params_array = array_map('trim', json_decode($json, true));
-        
-        $validate = \Validator::make($params_array, [
-                'codigo'                => 'required|alpha_num|unique:cliente|max:15',
-                'razonsocial'           => 'required|unique:cliente|max:15',
-                'cif'                   => 'required|alpha_num|unique:cliente|max:15',
-                'direccion'             => 'required|max:100',
-                'municipio'             => 'required|max:100',
-                'provincia'             => 'required|max:100',
-                'fechainiciocontrato'   => 'required|date',
-                'fechafincontrato'      => 'required|date',
-                'numeroreconocimientoscontratados'    => 'required|numeric'
-        ]);
-        
-        return Cliente::store($request, $validate, $params_array);
-    }
+
 }

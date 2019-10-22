@@ -30,17 +30,12 @@
 
     <div class="form-group">
         {{ Form::label('municipio', 'Municipio') }}
-        {{ Form::select('municipios', array('L' => 'Huercal', 'S' => 'Viator'), 'L') }}
+        {{ Form::select('municipios') }}
     </div>
-
-<!--    <div id="municipios" class="form-group">
-        {{ Form::label('municipio', 'Municipio') }}
-        {{ Form::select('size', array('L' => 'Huercal', 'S' => 'Viator'), 'L') }}
-    </div>-->
 
     <div class="form-group">
         {{ Form::label('provincia', 'Provincia') }}
-        {{ Form::select('size', array('L' => 'Almeria', 'S' => 'Granada'), 'L') }}
+        {{ Form::select('provincias') }}
     </div>
 
     <div class="form-group">
@@ -58,9 +53,10 @@
         {{ Form::number('numeroreconocimientoscontratados') }}
     </div>
 
-    {{ Form::submit('¡Crear un cliente!') }}
+    {{ Form::submit('¡Crear un cliente!', array('class' => 'btn btn-primary')) }}
 
 {{ Form::close() }}
 
 </div>
+<script src="{{ asset('/js/lists.js') }}"></script>
 @endsection

@@ -17,7 +17,7 @@
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 <!--        <script src="{{ asset('/js/datatable.js') }}"></script>-->
         <script src="{{ asset('js/app.js') }}" defer></script>
-        <script src="{{ asset('/js/lists.js') }}"></script>
+        
         <script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap.min.js"></script> 
         <script src="https://cdn.datatables.net/buttons/1.6.0/js/dataTables.buttons.min.js"></script> 
         <script src="https://cdn.datatables.net/buttons/1.6.0/js/buttons.flash.min.js"></script> 

@@ -25,7 +25,7 @@ class ValidacionesCliente extends FormRequest
     public function rules() {     
 
         return [
-            'codigo'                => 'required|alpha_num|unique:cliente|max:15',
+            'codigo'                => 'required|alpha_num|unique:cliente|max:1',
             'razonsocial'           => 'required|unique:cliente|max:15',
             'cif'                   => 'required|alpha_num|unique:cliente|max:15',
             'direccion'             => 'required|max:100',

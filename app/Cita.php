@@ -13,7 +13,7 @@ class Cita extends Model
     protected  $table = 'citas';
     
     protected $fillable = [
-        'idcliente', 'fecha', 'numeroempleadosreservados', 'numeroempleadosasistentes'
+        'razonsocial','cif','idcliente', 'fecha', 'numeroempleadosreservados', 'numeroempleadosasistentes'
     ];
     
     //Devuele un cliente
