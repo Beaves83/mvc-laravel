@@ -6,7 +6,6 @@ use App\Cliente;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
 
-
 class ClienteController extends Controller {
 
     /**
@@ -15,7 +14,7 @@ class ClienteController extends Controller {
      * @return a view with and the list of the clients.
      */
     public function index() {
-        $clientes = Cliente::informacionCompleta();   
+        $clientes = Cliente::informacionCompleta();
         return view('clientes.index')->with('clientes', $clientes);
     }
 
@@ -52,7 +51,7 @@ class ClienteController extends Controller {
                             ->withErrors($validator)
                             ->withInput(Input::except('password'));
         } else {
-         
+
             $cliente = new Cliente();
 
             $cliente->codigo = Input::get('codigo');
@@ -78,10 +77,9 @@ class ClienteController extends Controller {
      * @param  int $id
      * @return a view.
      */
-    public function show($id) {       
+    public function show($id) {
         $cliente = Cliente::getCliente($id);
-        return view('clientes.show')->with('cliente', $cliente[0]); 
-        
+        return view('clientes.show')->with('cliente', $cliente[0]);
     }
 
     /**
@@ -113,7 +111,7 @@ class ClienteController extends Controller {
             'fechafincontrato' => 'required|date',
             'numeroreconocimientoscontratados' => 'required|numeric'
         );
-        
+
         $validator = Validator(Input::all(), $rules);
 
         if ($validator->fails()) {
