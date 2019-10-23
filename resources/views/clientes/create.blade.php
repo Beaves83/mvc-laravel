@@ -53,10 +53,10 @@
         {{ Form::number('numeroreconocimientoscontratados') }}
     </div>
 
-    {{ Form::submit('¡Crear un cliente!', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Crear', array('class' => 'btn btn-primary')) }}
 
 {{ Form::close() }}
 
 </div>
-<script src="{{ asset('/js/lists.js') }}"></script>
+
 @endsection

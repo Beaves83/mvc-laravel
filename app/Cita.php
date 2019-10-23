@@ -13,8 +13,29 @@ class Cita extends Model
     protected  $table = 'citas';
     
     protected $fillable = [
-        'razonsocial','cif','idcliente', 'fecha', 'numeroempleadosreservados', 'numeroempleadosasistentes'
+        'razonsocial','cif','idcliente', 'fecha', 'numeroempleadosreservados', 
+        'numeroempleadosasistentes'
     ];
+    
+    
+    //Cruzamos la tabla de clientes con municipios y provincias.
+    public static function informacionCompleta() {       
+        $listado = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
+                ->select('citas.*','clientes.razonsocial')
+                ->get();
+
+        return $listado;
+    }
+    
+    //Cruzamos la tabla de clientes con municipios y provincias y filtramos por el id.
+    public static function getCita($id) {       
+        $listado = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
+                ->where('citas.id', '=', $id)
+                ->select('citas.*','clientes.razonsocial')
+                ->get();
+
+        return $listado;
+    }
     
     //Devuele un cliente
     public function cliente() {
@@ -62,6 +83,7 @@ class Cita extends Model
             $cita->fecha = $params_array['fecha'];
             $cita->numeroempleadosreservados = $params_array['numeroempleadosreservados'];  
             $cita->numeroempleadosasistentes = $params_array['numeroempleadosasistentes']; 
+            
             $cita->save();
 
             $data = array(

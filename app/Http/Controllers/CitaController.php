@@ -2,84 +2,99 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Input;
 use App\Cliente;
 use App\Cita;
 
 class CitaController extends Controller
 {
     /**
-     * Devuelve la vista con las citas.
+     * Default page for showing all the list.
      *
-     * @return Response
+     * @return a view with and the list of the clients.
      */
     public function index()
     {       
-        $citas = Cita::reservartionsWithClient();      
-        return view('gestioncitas')->with( compact('citas'));
+        $citas = Cita::informacionCompleta();      
+        return view('citas.index')->with('citas', $citas);
     }
 
     /**
-     * Muestra el formulario para crear una cita.
+     * Show the form for creating a new resource.
      *
-     * @return Response
+     * @return a view
      */
     public function create()
     {
-        //
+        return view('citas.create');
     }
     
     /**
-     * Guarda una cita.
+     * Save the specified resource.
      *
      * @return Response
      */
-    public function store(Request $request)
-    {    
-        $json = $request->input('json', null);
-        $params_array = array_map('trim', json_decode($json, true));
-        
-        $validate = \Validator::make($params_array, [
-                'cliente_id'       => 'required|numeric',
-                'fecha'           => 'required|date',
-                'numeroempleadosreservados' => 'required|numeric'
-        ]);
-        
-        return Cita::store($request, $validate, $params_array);  
+    public function store()
+    {            
+        $rules = array(
+            'clientes'      => 'required|numeric',
+            'fecha'           => 'required|date|after:today',
+            'numeroempleadosreservados' => 'required|numeric'
+        );
+        //dd(Input::all());
+        $validator = \Validator::make(Input::all(), $rules);
+
+        if ($validator->fails()) {
+            return \Redirect::to('citas/create')
+                            ->withErrors($validator)
+                            ->withInput(Input::except('password'));
+        } else {
+
+            $cita = new Cita();     
+            
+            $cita->cliente_id = Input::get('clientes');
+            $cita->fecha = Input::get('fecha');
+            $cita->numeroempleadosreservados = Input::get('numeroempleadosreservados');
+            $cita->numeroempleadosasistentes = 0;
+
+            $cita->save();
+
+            \Session::flash('message', '¡Cita creada!');
+            return \Redirect::to('citas');
+        }
     }
     
-    /**
-     * Devuelve un listado completo con todas las citas.
-     *
-     * @return Response
-     */
-    public function all()
-    {       
-        return response() -> json(Cita::reservartionsWithClient()); 
-    }
+    
 
     /**
-     * Muestra una cita especifica.
+     * Show the specified resource.
      *
-     * @param  int  $id
-     * @return Response
+     * @param  int $id
+     * @return a view.
      */
     public function show($id)
-    {
-        $cita = Cita::reservartionsWithClientWithFilter($id);
-        return view('gestionvisitas', $cita);   
+    { 
+        $citas = Cita::getCita($id);
+        return view('citas.show')->with('cita', $citas[0]);
     }
 
     /**
-     * Devuelve una cita
+     * Return the view of the specified resource to edit.
      *
      * @param  int  $id
      * @return Response
      */
     public function edit($id)
     {
-        return \App\Cita::find($id);
+        $cita = Cita::find($id);
+
+        if($cita->numeroempleadosasistentes > 0){
+            \Session::flash('message', 'La cita no se puede modificar porque ya ha habido asistentes a la consulta.');
+            return \Redirect::to('citas');
+            
+        }
+        return view("citas.edit")->with('cita', $cita);
     }
 
     /**
@@ -156,5 +171,15 @@ class CitaController extends Controller
         $params_array = array_map('trim',$params_array);
         
         return $params_array;
+    }
+    
+    /**
+     * Devuelve un listado completo con todas las citas.
+     *
+     * @return Response
+     */
+    public function all()
+    {       
+        return response() -> json(Cita::reservartionsWithClient()); 
     }
 }

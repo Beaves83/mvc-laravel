@@ -41,7 +41,7 @@ class ClienteController extends Controller {
             'municipios' => 'max:100',
             'provincias' => 'max:100',
             'fechainiciocontrato' => 'required|date',
-            'fechafincontrato' => 'required|date',
+            'fechafincontrato' => 'required|date|after:fechainiciocontrato',
             'numeroreconocimientoscontratados' => 'required|numeric'
         );
         $validator = \Validator::make(Input::all(), $rules);
@@ -89,8 +89,8 @@ class ClienteController extends Controller {
      * @return Response
      */
     public function edit($id) {
-        $cliente = Cliente::find($id);
-        return view("clientes.edit")->with('cliente', $cliente);
+        $cliente = Cliente::getCliente($id);
+        return view("clientes.edit")->with('cliente', $cliente[0]);
     }
 
     /**
@@ -108,7 +108,7 @@ class ClienteController extends Controller {
             'municipios' => 'max:100',
             'provincias' => 'max:100',
             'fechainiciocontrato' => 'required|date',
-            'fechafincontrato' => 'required|date',
+            'fechafincontrato' => 'required|date|after:fechainiciocontrato',
             'numeroreconocimientoscontratados' => 'required|numeric'
         );
 
@@ -152,4 +152,13 @@ class ClienteController extends Controller {
         return \Redirect::to('clientes');
     }
 
+    /**
+     * Return a list with the recurses.
+     *
+     * @return a view with and the list of the clients.
+     */
+    public function clientslist() {
+        $clientes = Cliente::all();
+        return $clientes;
+    }
 }

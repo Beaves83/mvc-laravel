@@ -58,5 +58,5 @@
 {{ Form::close() }}
 
 </div>
-<script src="{{ asset('/js/lists.js') }}"></script>
+
 @endsection

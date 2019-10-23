@@ -23,5 +23,17 @@ $(document).ready(function () {
             });
         }
     });
+    
+    $.ajax({
+        url: '../clientslist',
+        type: 'get',
+        dataType: 'json',
+        success: function (clientes) {
+            $('select[name="clientes"]').empty();
+            $.each(clientes, function (key, value) {
+                $('select[name="clientes"]').append('<option value="' + value.id + '">' + value.razonsocial + '</option>');
+            });
+        }
+    });
 });
 
