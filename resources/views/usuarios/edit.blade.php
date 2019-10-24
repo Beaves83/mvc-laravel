@@ -1,34 +1,34 @@
 @extends('layouts.app')
 
-@section('title', 'Crear un usuario')
+@section('title', 'Editar un usuario')
 
 @section('content')
 <!-- if there are creation errors, they will show here -->
 {{ Html::ul($errors->all()) }}
 
-{{ Form::open(array('url' => 'usuarios')) }}
+{{ Form::model($usuario, array('route' => array('usuarios.update', $usuario->id), 'method' => 'PUT')) }}
 
     <div class="form-group">
         {{ Form::label('name', 'Nombre') }}
-        {{ Form::text('name') }}
+        {{ Form::text('name', null, array('class' => 'form-control')) }}
     </div>
 
     <div class="form-group">
         {{ Form::label('email', 'Email') }}
-        {{ Form::email('email') }}
+        {{ Form::text('email', null, array('class' => 'form-control')) }}
     </div>
 
-    <div class="form-group">
+<!--    <div class="form-group">
         {{ Form::label('password', 'Contraseña') }}
-        {{ Form::password('password') }}
-    </div>
+        {{ Form::text('password', null, array('class' => 'form-control')) }}
+    </div>-->
 
     <div class="form-group">
         {{ Form::label('rol', 'Rol') }}
         {{ Form::select('rol' , array('admin' => 'Admin', 'medico' => 'Médico', 'secretario' => 'Secreatario/a')) }}
     </div>
 
-    {{ Form::submit('Crear', array('class' => 'btn btn-primary')) }}
+    {{ Form::submit('Actualizar', array('class' => 'btn btn-primary')) }}
 
 {{ Form::close() }}
 

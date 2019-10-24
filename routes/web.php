@@ -29,11 +29,13 @@ Route::get('citas/confirmReserve', 'CitaController@confirmReserve')->name('citas
 
 //Usuario
 Route::get('usuarios', 'UserController@index')->name('usuarios.index');
-Route::get('usuarios/register', 'UserController@register')->name('usuarios.register');
-Route::put('usuarios/update', 'UserController@update')->name('usuarios.update');
-Route::post('usuarios/store', 'UserController@store')->name('usuarios.store');
-Route::delete('usuarios/destroy/{id}', 'UserController@destroy')->name('usuarios.destroy');
-Route::get('usuarios/listado', 'UserController@all')->name('usuarios.all');
+Route::get('usuarios/create', 'UserController@create')->name('usuarios.create');
+Route::post('usuarios', 'UserController@store')->name('usuarios.store');
+Route::get('usuarios/{usuario}', 'UserController@show')->name('usuarios.show');
+Route::get('usuarios/{usuario}/edit', 'UserController@edit')->name('usuarios.edit');
+Route::put('usuarios/{usuario}', 'UserController@update')->name('usuarios.update');
+Route::delete('usuarios/{usuario}', 'UserController@destroy')->name('usuarios.destroy');
+//Route::get('usuarios', 'UserController@index')->name('usuarios.index');
 Auth::routes();
 
 //Listados

@@ -2,99 +2,122 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\User;
-use App\Http\Requests\ValidacionesUsuario;
-
+use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Input;
 
 class UserController extends Controller {
 
     /**
-     * Registro de usuario.
+     * Default page for showing all the list.
      *
-     */
-    public function register(Request $request) {
-
-        $json = $request->input('json', null);
-        //dd($json);
-        $params_array = array_map('trim', json_decode($json, true));
-
-        $validate = \Validator::make($params_array, [
-                    'name' => 'required',
-                    'email' => 'required|email|unique:users',
-                    'password' => 'required',
-        ]);
-
-        return User::register($request, $validate, $params_array);
-    }
-
-    /**
-     * Login de usuario.
-     *
-     */
-    public function login(Request $request) {
-        return User::login($request);
-    }
-
-    /**
-     * Actualización de datos
-     *
-     */
-    public function update(Request $request) {
-
-        $params_array = $this ->conversionRequestToArray($request);
-        return User::updateUser($params_array);
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
+     * @return a view with and the list of the clients.
      */
     public function index() {
-        echo 'Estamos en el index';
+        $usuarios = User::All();
+        return view('usuarios.index')->with('usuarios', $usuarios);
     }
-
+    
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return a view
+     */
+    public function create() {
+        return view('usuarios.create');
+    }
+    
     /**
      * Store a newly created resource in storage.
      *
      * @return Response
      */
-    public function store(Request $request) {
+    public function store() {
         
-        $params_array = $this ->conversionRequestToArray($request);
-        $validate = \Validator::make($params_array, [
-                    'name' => 'required',
-                    'email' => 'required|email|unique:users',
-                    'password' => 'required',
-        ]);
-        
-        
-        return User::store($params_array, $validate);
+       $rules = array(
+            'name' => 'required|max:190',
+            'email' => 'required|email|unique:users|max:190',
+            'password' => 'required',
+            'rol' => 'required',
+        );
+        $validator = \Validator::make(Input::all(), $rules);
+        //dd(Input::all());
+        if ($validator->fails()) {
+            return \Redirect::to('usuarios/create')
+                            ->withErrors($validator)
+                            ->withInput(Input::except('password'));
+        } else {
+
+            $user = new User();
+            
+            $user->name = Input::get('name');
+            $user->password = hash('sha256', Input::get('password'));
+            $user->rol = Input::get('rol');
+            $user->email = Input::get('email');
+            
+            $user->save();
+
+            \Session::flash('message', 'Usuario creado');
+            return \Redirect::to('usuarios');
+        }
     }
 
     /**
-     * Display the specified resource.
+     * Show the specified resource.
+     *
+     * @param  int $id
+     * @return a view.
+     */
+    public function show($id) {
+        $usuario = User::find($id);
+        return view('usuarios.show')->with('usuario', $usuario);
+    }
+    
+    /**
+     * Return the view of the specified resource to edit.
      *
      * @param  int  $id
      * @return Response
      */
-    public function show($id) {
+    public function edit($id) {
         $usuario = User::find($id);
-        return view('usuarios.show', array('usuario' => $usuario));
+        return view("usuarios.edit")->with('usuario', $usuario);
     }
-
+    
     /**
-     * Devuelve un listado completo con todas las citas.
+     * Update the specified resource from storage.
      *
+     * @param  int  $id
      * @return Response
      */
-    public function all() {
-        $usuarios = User::all()->take(30);
-        return response()->json($usuarios);
-    }
+    public function update($id) {
+        $rules = array(
+            'name' => 'required|max:190',
+            'email' => 'required|email|max:190|unique:users,email,'. $id . ',id',
+//            'password' => 'required',
+            'rol' => 'required',
+        );
 
+        $validator = Validator(Input::all(), $rules);
+
+        if ($validator->fails()) {
+            return \Redirect::to('usuarios/' . $id . '/edit')
+                            ->withErrors($validator)
+                            ->withInput(Input::except('password'));
+        } else {
+            User::where('id', $id)
+                    ->update(
+                            [
+                                'name' => Input::get('name'),
+                                'email' => Input::get('email'),
+//                                'password' => hash('sha256', Input::get('password')),
+                                'rol' => Input::get('rol')     
+            ]);
+            \Session::flash('message', 'Usuario actualizado');
+            return \Redirect::to('usuarios');
+        }
+    }
+     
     /**
      * Remove the specified resource from storage.
      *
@@ -102,18 +125,10 @@ class UserController extends Controller {
      * @return Response
      */
     public function destroy($id) {
-        //dd($id);
         $usuario = User::find($id);
         $usuario->delete();
-        return $usuario;
-    }
-    
-    //Conversión Request a Array.
-    public function conversionRequestToArray(Request $request){
-        $json = $request -> input('json', null);
-        $params_array = json_decode($json, true);
-        $params_array = array_map('trim',$params_array);
-        return $params_array;
-    }
 
+        \Session::flash('message', 'El usuario ' . $usuario->name . ' ha sido eliminado.');
+        return \Redirect::to('usuarios');
+    }
 }

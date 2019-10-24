@@ -144,7 +144,6 @@ class ClienteController extends Controller {
      * @return Response
      */
     public function destroy($id) {
-        // delete
         $cliente = Cliente::find($id);
         $cliente->delete();
 

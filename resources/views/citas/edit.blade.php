@@ -1,17 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Editar un cliente')
+@section('title', 'Editar una cita')
 
 @section('content')
 <!-- if there are creation errors, they will show here -->
 {{ Html::ul($errors->all()) }}
 
 {{ Form::model($cita, array('route' => array('citas.update', $cita->id), 'method' => 'PUT')) }}
-
-    <div class="form-group">
-        {{ Form::label('razonsocial', 'Cliente') }}
-        {{ Form::text('razonsocial', null, array('readonly' => true)) }}
-    </div>
 
     <div class="form-group">
         {{ Form::label('fecha', 'Fecha') }}
