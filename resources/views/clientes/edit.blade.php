@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Crear un cliente')
+@section('title', 'Editar un cliente')
 
 @section('content')
 <!-- if there are creation errors, they will show here -->

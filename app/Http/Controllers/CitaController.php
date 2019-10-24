@@ -42,7 +42,6 @@ class CitaController extends Controller
             'fecha'           => 'required|date|after:today',
             'numeroempleadosreservados' => 'required|numeric'
         );
-        //dd(Input::all());
         $validator = \Validator::make(Input::all(), $rules);
 
         if ($validator->fails()) {
@@ -63,9 +62,7 @@ class CitaController extends Controller
             \Session::flash('message', '¡Cita creada!');
             return \Redirect::to('citas');
         }
-    }
-    
-    
+    }  
 
     /**
      * Show the specified resource.
