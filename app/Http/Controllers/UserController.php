@@ -97,12 +97,11 @@ class UserController extends Controller {
 //            'password' => 'required',
             'rol' => 'required',
         );
-
+        
         $validator = Validator(Input::all(), $rules);
 
         if ($validator->fails()) {
-            return \Redirect::to('usuarios/' . $id . '/edit')
-                            ->withErrors($validator)
+            return \Redirect::to('usuarios/' . $id . '/edit')->withErrors($validator)
                             ->withInput(Input::except('password'));
         } else {
             User::where('id', $id)

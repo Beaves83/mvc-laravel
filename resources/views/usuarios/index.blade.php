@@ -8,7 +8,7 @@
 <div class="alert alert-info">{{ Session::get('message') }}</div>
 @endif
 <div class="container">
-    <table id="tablaclientes" class="table table-striped table-bordered display nowrap">
+    <table id="tablagenerica" class="table table-striped table-bordered display nowrap">
         <thead>
             <tr>
                 <td>Acciones</td>
