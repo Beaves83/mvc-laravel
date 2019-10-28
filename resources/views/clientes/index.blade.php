@@ -8,8 +8,8 @@
 <div class="alert alert-info">{{ Session::get('message') }}</div>
 @endif
 <div class="container">
-    <table id="tablagenerica" class="table table-striped table-bordered display nowrap">
-        <thead>
+    <table id="tablagenerica" class="table table-striped table-bordered display nowrap" style="width:100%">
+        <thead class="thead-dark">
             <tr>
                 <td>Acciones</td>
                 <td>Código</td>
