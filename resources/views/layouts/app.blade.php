@@ -10,8 +10,6 @@
         <title>{{ config('app.name', 'GRM') }}</title>
 
         <!-- Scripts -->
-
-
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
@@ -28,8 +26,6 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
 
         <!-- Styles -->
-<!--        <link href="{{ asset('css/app.css') }}" rel="stylesheet">-->
-        
         <link href="{{ asset('css/datatable.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -51,7 +47,11 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav mr-auto">
+                            
                             @guest
+                            
+                            @else 
+                            @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario'))
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('clientes') }}">Listado clientes</a>
                             </li>
@@ -60,26 +60,23 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('usuarios') }}">Listado usuarios</a>
-                            </li>
-                            @else
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('clientes') }}">Listado clientes</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('clientes/create') }}">Crear un cliente</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('citas') }}">Listado citas</a>
-                            </li>
-                            <li class="nav-item">
+                            </li>    
+                             <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('citas/create') }}">Crear una cita</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('usuarios') }}">Listado usuarios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('usuarios/create') }}">Crear un usuario</a>
-                            </li>
+                            
+                            @endif
+                            @if ( Auth::user()->hasRole('admin') )
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ URL::to('usuarios/create') }}">Crear un usuario</a>
+                                </li>
+                            @endif
+                            
+                            
+                            
                             @endguest
                         </ul>
 
@@ -88,11 +85,11 @@
                             <!-- Authentication Links -->
                             @guest                           
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                                <a class="nav-link" href="{{ route('login') }}">{{ __('Entrar') }}</a>
                             </li>
                             @if (Route::has('register'))
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                <a class="nav-link" href="{{ route('register') }}">{{ __('Registrarse') }}</a>
                             </li>
                             @endif
                             @else
@@ -105,7 +102,7 @@
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        {{ __('Desconectar') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

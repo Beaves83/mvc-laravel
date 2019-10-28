@@ -25,6 +25,7 @@ class CitaController extends Controller {
      * @return a view
      */
     public function create() {
+        auth()->user()->authorizeRoles(['admin','secretario']);
         return view('citas.create');
     }
 
@@ -34,6 +35,7 @@ class CitaController extends Controller {
      * @return Response
      */
     public function store() {
+        auth()->user()->authorizeRoles(['admin','secretario']);
         $rules = array(
             'clientes' => 'required|numeric',
             'fecha' => 'required|date|after:today',
@@ -79,6 +81,7 @@ class CitaController extends Controller {
      * @return Response
      */
     public function edit($id) {
+        auth()->user()->authorizeRoles(['admin','secretario']);
         $cita = Cita::find($id);
 
         if ($cita->numeroempleadosasistentes > 0) {
@@ -95,6 +98,7 @@ class CitaController extends Controller {
      * @return Response
      */
     public function update($id) {
+        auth()->user()->authorizeRoles(['admin','secretario']);
         $rules = array(
 //            'clientes'      => 'required|numeric',
             'fecha' => 'required|date|after:today',
@@ -128,6 +132,7 @@ class CitaController extends Controller {
      * @return Response
      */
     public function destroy($id) {
+        auth()->user()->authorizeRoles(['admin']);
         $cita = Cita::find($id);
         //dd($cita);
         $cita->delete();

@@ -23,10 +23,6 @@
         {{ Form::password('password') }}
     </div>
 
-    <div class="form-group">
-        {{ Form::label('rol', 'Rol') }}
-        {{ Form::select('rol' , array('admin' => 'Admin', 'medico' => 'Médico', 'secretario' => 'Secreatario/a')) }}
-    </div>
 
     {{ Form::submit('Crear', array('class' => 'btn btn-primary')) }}
 

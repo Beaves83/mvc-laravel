@@ -23,7 +23,8 @@ class UserController extends Controller {
      *
      * @return a view
      */
-    public function create() {
+    public function create() {     
+        auth()->user()->authorizeRoles(['admin']);
         return view('usuarios.create');
     }
     
@@ -34,11 +35,12 @@ class UserController extends Controller {
      */
     public function store() {
         
+       auth()->user()->authorizeRoles(['admin']);  
        $rules = array(
             'name' => 'required|max:190',
             'email' => 'required|email|unique:users|max:190',
             'password' => 'required',
-            'rol' => 'required',
+//            'rol' => 'required',
         );
         $validator = \Validator::make(Input::all(), $rules);
         //dd(Input::all());
@@ -52,7 +54,7 @@ class UserController extends Controller {
             
             $user->name = Input::get('name');
             $user->password = hash('sha256', Input::get('password'));
-            $user->rol = Input::get('rol');
+//            $user->rol = Input::get('rol');
             $user->email = Input::get('email');
             
             $user->save();
@@ -80,6 +82,7 @@ class UserController extends Controller {
      * @return Response
      */
     public function edit($id) {
+        auth()->user()->authorizeRoles(['admin']);  
         $usuario = User::find($id);
         return view("usuarios.edit")->with('usuario', $usuario);
     }
@@ -91,11 +94,12 @@ class UserController extends Controller {
      * @return Response
      */
     public function update($id) {
+        auth()->user()->authorizeRoles(['admin']);  
         $rules = array(
             'name' => 'required|max:190',
             'email' => 'required|email|max:190|unique:users,email,'. $id . ',id',
 //            'password' => 'required',
-            'rol' => 'required',
+//            'rol' => 'required',
         );
         
         $validator = Validator(Input::all(), $rules);
@@ -110,7 +114,7 @@ class UserController extends Controller {
                                 'name' => Input::get('name'),
                                 'email' => Input::get('email'),
 //                                'password' => hash('sha256', Input::get('password')),
-                                'rol' => Input::get('rol')     
+//                                'rol' => Input::get('rol')     
             ]);
             \Session::flash('message', 'Usuario actualizado');
             return \Redirect::to('usuarios');
@@ -124,6 +128,7 @@ class UserController extends Controller {
      * @return Response
      */
     public function destroy($id) {
+        auth()->user()->authorizeRoles(['admin']);  
         $usuario = User::find($id);
         $usuario->delete();
 

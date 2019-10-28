@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
         $this->call('ComunidadesAutonomasSeeder');
         $this->call('ProvinciasSeeder');
         $this->call('MunicipiosSeeder');
+        $this->call(RoleTableSeeder::class);
         
         //Rellenamos la BBDD con valores.
         factory(App\Cliente::class, 200)->create();

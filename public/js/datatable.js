@@ -36,8 +36,8 @@ $(document).ready( function () {
             "sZeroRecords": "No hay registros para mostrar",
             "sInfoEmpty": "No hay registros para mostrar",
             "sInfo": "Hay  _TOTAL_ entradas para mostrar (_START_ a _END_)",
-            "sPrevious": "Página anterior",
-            "sNext": "Página siguiente",
+            "sPrevious": "Anterior",
+            "sNext": "Siguiente",
             "sLast": "Última página",
             "sFirst": "Primera página"
         }

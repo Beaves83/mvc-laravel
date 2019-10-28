@@ -10,7 +10,7 @@
         
         <p>
             <strong>Email:</strong> {{ $usuario->email }}<br>
-            <strong>Rol:</strong> {{ $usuario->rol}}<br>
+           
            
         </p>
     </div>

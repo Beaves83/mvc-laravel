@@ -11,43 +11,48 @@
     <table id="tablagenerica" class="table table-striped table-bordered display nowrap" style="width:100%">
         <thead class="thead-dark">
             <tr>
-                <td>Acciones</td>
-                <td>Código</td>
-                <td>Razón social</td>
+                
+<!--                <td>Código</td>-->
                 <td>Cif</td>
-                <td>Dirección</td>
+                <td>Razón social</td>             
+<!--                <td>Dirección</td>
                 <td>Municipio</td>
-                <td>Provincia</td>
+                <td>Provincia</td>-->
                 <td>Fecha inicio contrato</td>
                 <td>Fecha fin contrato</td>
-                <td>Reconocimientos contratados</td>
-                <td>Reconocimientos usados</td>                       
+                <td>R.Contratados</td>
+                <td>R.Utilizados</td>     
+                @if (Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
+                    <td>Acciones</td>
+                @endif
             </tr>
         </thead>
         <tbody>
             @foreach($clientes as $key => $value)
-            <tr>
-                <!-- Mostrarmos los botones de mostrar, ediar y borrar -->
-                <td>
-                    <div class="btn-group-vertical">
-                        {{ Form::open(array('url' => 'clientes/' . $value->id, 'class' => 'pull-right')) }}
-                        {{ Form::hidden('_method', 'DELETE') }}
-                        {{ Form::submit('Borrar', array('class' => 'btn btn-outline-danger btn-sm btn-block' )) }}
-                        {{ Form::close() }}
-                        <a class="btn btn-outline-success btn-sm btn-block" href="{{ URL::to('clientes/' . $value->id) }}">Detalles</a>
-                        <a class="btn btn-outline-info btn-sm btn-block" href="{{ URL::to('clientes/' . $value->id . '/edit') }}">Editar</a>
-                    </div>
-                </td>
-                <td>{{$value->codigo}}</td>
-                <td>{{ $value->razonsocial }}</td>
+            <tr>      
+<!--                <td>{{$value->codigo}}</td>-->
                 <td>{{ $value->cif }}</td>
-                <td>{{ $value->direccion }}</td>
+                <td>{{ $value->razonsocial }}</td>
+                
+<!--                <td>{{ $value->direccion }}</td>
                 <td>{{ $value->city_name }}</td>
-                <td>{{ $value->region_name }}</td>
+                <td>{{ $value->region_name }}</td>-->
                 <td>{{ $value->fechainiciocontrato }}</td>
                 <td>{{ $value->fechafincontrato }}</td>     
                 <td>{{ $value->numeroreconocimientoscontratados }}</td>
                 <td>{{ $value->numeroreconocimientosutilizados }}</td>
+                @if (Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
+                    <td>
+                       <div class="btn-group-vertical">
+                           {{ Form::open(array('url' => 'clientes/' . $value->id, 'class' => 'pull-right')) }}
+                           {{ Form::hidden('_method', 'DELETE') }}
+                           {{ Form::submit('Borrar', array('class' => 'btn btn-outline-danger btn-sm btn-block' )) }}
+                           {{ Form::close() }}
+                           <a class="btn btn-outline-success btn-sm btn-block" href="{{ URL::to('clientes/' . $value->id) }}">Detalles</a>
+                           <a class="btn btn-outline-info btn-sm btn-block" href="{{ URL::to('clientes/' . $value->id . '/edit') }}">Editar</a>
+                       </div>
+                    </td>
+                @endif
             </tr>
             @endforeach
         </tbody>

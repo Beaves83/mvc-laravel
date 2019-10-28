@@ -24,6 +24,7 @@ class ClienteController extends Controller {
      * @return a view
      */
     public function create() {
+        auth()->user()->authorizeRoles(['admin','secretario']);
         return view('clientes.create');
     }
 
@@ -33,6 +34,7 @@ class ClienteController extends Controller {
      * @return Response
      */
     public function store() {
+        auth()->user()->authorizeRoles(['admin','secretario']);
         $rules = array(
             'codigo' => 'required|alpha_num|unique:clientes|max:190',
             'razonsocial' => 'required|unique:clientes|max:190',
@@ -89,6 +91,7 @@ class ClienteController extends Controller {
      * @return Response
      */
     public function edit($id) {
+        auth()->user()->authorizeRoles(['admin','secretario']);
         $cliente = Cliente::getCliente($id);
         return view("clientes.edit")->with('cliente', $cliente[0]);
     }
@@ -100,6 +103,7 @@ class ClienteController extends Controller {
      * @return Response
      */
     public function update($id) {
+        auth()->user()->authorizeRoles(['admin','secretario']);
         $rules = array(
             'codigo' => 'required|alpha_num|max:190|unique:clientes,codigo,' . $id . ',id',
             'razonsocial' => 'max:190|unique:clientes,razonsocial,' . $id . ',id',
@@ -144,6 +148,7 @@ class ClienteController extends Controller {
      * @return Response
      */
     public function destroy($id) {
+        auth()->user()->authorizeRoles(['admin']);
         $cliente = Cliente::find($id);
         $cliente->delete();
 
