@@ -16,7 +16,7 @@ class Cita extends Model {
     ];
 
     //Cruzamos la tabla de clientes con municipios y provincias.
-    public static function informacionCompleta() {
+    public static function allAppointment() {
         $listado = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
                 ->select('citas.*', 'clientes.razonsocial')
                 ->get();

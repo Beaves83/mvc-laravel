@@ -5,10 +5,11 @@
 @section('content')
 <!-- if there are creation errors, they will show here -->
 {{ Html::ul($errors->all()) }}
+<div class="jumbotron w-50 mx-auto border shadow-lg p-4 mb-4 bg-white">
+    <div class="jumbotron h-25 d-flex justify-content-center"><h1>Creación de citas</h1></div>
+    {{ Form::open(array('url' => 'citas')) }}
 
-{{ Form::open(array('url' => 'citas')) }}
 
-    
     <div class="form-group">
         {{ Form::label('razonsocial', 'Cliente') }}
         {{ Form::select('clientes') }}
@@ -16,17 +17,22 @@
 
     <div class="form-group">
         {{ Form::label('fecha', 'Fecha') }}
-        {{ Form::date('fecha') }}
+        {{ Form::date('fecha', null, array('class' => 'form-control')) }}
     </div>
 
     <div class="form-group">
         {{ Form::label('numeroempleadosreservados', 'Número de reservas') }}
-        {{ Form::number('numeroempleadosreservados') }}
+        {{ Form::number('numeroempleadosreservados', null, array('class' => 'form-control')) }}
     </div>
 
-    {{ Form::submit('Crear', array('class' => 'btn btn-primary')) }}
+    <div class="d-flex justify-content-center">
+        {{ Form::submit('Crear', array('class' => 'btn btn-primary')) }}
+    </div>
 
-{{ Form::close() }}
 
+    {{ Form::close() }}
+
+
+</div>
 </div>
 @endsection

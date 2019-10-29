@@ -15,7 +15,7 @@ class Cliente extends Model {
     ];
 
     //Cruzamos la tabla de clientes con municipios y provincias.
-    public static function informacionCompleta() {
+    public static function allClient() {
         $listado = DB::table('clientes')->join('municipios', 'municipios.id', '=', 'clientes.municipio')
                 ->join('provincias', 'provincias.id', '=', 'clientes.provincia')
                 ->select('clientes.*', 'municipios.city_name', 'provincias.region_name')

@@ -14,7 +14,7 @@ class UserController extends Controller {
      * @return a view with and the list of the clients.
      */
     public function index() {
-        $usuarios = User::All();
+        $usuarios = User::allUser();
         return view('usuarios.index')->with('usuarios', $usuarios);
     }
     

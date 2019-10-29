@@ -3,10 +3,11 @@
 @section('title', 'Editar un cliente')
 
 @section('content')
-<!-- if there are creation errors, they will show here -->
-{{ Html::ul($errors->all()) }}
 
-{{ Form::model($cliente, array('route' => array('clientes.update', $cliente->id), 'method' => 'PUT')) }}
+{{ Html::ul($errors->all()) }}
+<div class="jumbotron w-50 mx-auto border shadow-lg p-4 mb-4 bg-white">
+    <div class="jumbotron h-25 d-flex justify-content-center"><h1>Edición de clientes</h1></div>
+    {{ Form::model($cliente, array('route' => array('clientes.update', $cliente->id), 'method' => 'PUT')) }}
 
     <div class="form-group">
         {{ Form::label('codigo', 'Código') }}
@@ -53,10 +54,12 @@
         {{ Form::number('numeroreconocimientoscontratados', null, array('class' => 'form-control')) }}
     </div>
 
-    {{ Form::submit('Actualizar', array('class' => 'btn btn-primary')) }}
+    <div class="d-flex justify-content-center">
+        {{ Form::submit('Actualizar', array('class' => 'btn btn-primary')) }}
+    </div>
 
-{{ Form::close() }}
+    {{ Form::close() }}
 
 </div>
-
+</div>
 @endsection

@@ -39,7 +39,7 @@ Route::delete('usuarios/{usuario}', 'UserController@destroy')->name('usuarios.de
 Auth::routes();
 
 //Listados
-Route::get('municipios', 'MunicipioController@index');
-Route::get('provincias', 'ProvinciaController@index');
+Route::get('municipios', 'MunicipioController@index')->name('municipios.alllist');
+Route::get('provincias', 'ProvinciaController@index')->name('provincias.alllist');
 
 Route::get('/home', 'HomeController@index')->name('home');

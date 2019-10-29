@@ -15,7 +15,7 @@ class CitaController extends Controller {
      * @return a view with and the list of the clients.
      */
     public function index() {
-        $citas = Cita::informacionCompleta();
+        $citas = Cita::allAppointment();
         return view('citas.index')->with('citas', $citas);
     }
 

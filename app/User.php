@@ -3,8 +3,10 @@
 namespace App;
 
 use App\Role;
+
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable {
@@ -42,6 +44,16 @@ class User extends Authenticatable {
 
     public function roles() {
         return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+    
+    //Cruzamos la tabla de clientes con municipios y provincias.
+    public static function allUser() {
+        $listado = DB::table('users')->join('role_user', 'role_user.user_id', '=', 'users.id')
+                ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->select('users.*', 'roles.description')
+                ->get();
+
+        return $listado;
     }
 
     public function authorizeRoles($roles) {

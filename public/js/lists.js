@@ -1,7 +1,7 @@
 $(document).ready(function () {
 
     $.ajax({
-        url: '../municipios',
+        url: "../municipios",
         type: 'get',
         dataType: 'json',
         success: function (municipios) {

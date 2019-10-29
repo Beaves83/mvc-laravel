@@ -14,7 +14,7 @@ class ClienteController extends Controller {
      * @return a view with and the list of the clients.
      */
     public function index() {
-        $clientes = Cliente::informacionCompleta();
+        $clientes = Cliente::allClient();
         return view('clientes.index')->with('clientes', $clientes);
     }
 
