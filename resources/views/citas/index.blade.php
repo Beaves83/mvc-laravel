@@ -10,36 +10,39 @@
 <div class="container">
     <table id="tablagenerica" class="table table-striped table-bordered display nowrap">
         <thead>
-            <tr>
-                @if (Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
-                    <td>Acciones</td>
-                @endif
+            <tr>             
                 <th>Cliente</th>
                 <th>Fecha</th>
                 <th>Empleados reservados</th>
-                <th>Asistencias</th>                      
+                <th>Asistencias</th>     
+                @if (Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
+                    <td></td>
+                    <td></td>
+                @endif
             </tr>
         </thead>
         <tbody>
             @foreach($citas as $key => $value)
             <tr>
-                <!-- Mostrarmos los botones de mostrar, ediar y borrar -->
-                @if (Auth::check() and Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
-                    <td>
-                        <div class="btn-group-vertical">
-                            {{ Form::open(array('url' => 'citas/' . $value->id, 'class' => 'pull-right')) }}
-                            {{ Form::hidden('_method', 'DELETE') }}
-                            {{ Form::submit('Borrar', array('class' => 'btn btn-outline-danger btn-sm btn-block' )) }}
-                            {{ Form::close() }}
-                            <a class="btn btn-outline-success btn-sm btn-block" href="{{ URL::to('citas/' . $value->id) }}">Detalles</a>
-                            <a class="btn btn-outline-info btn-sm btn-block" href="{{ URL::to('citas/' . $value->id . '/edit') }}">Editar</a>
-                        </div>
-                    </td>
-                @endif
                 <td>{{ $value->razonsocial }}</td>
                 <td>{{ $value->fecha }}</td>
                 <td>{{ $value->numeroempleadosreservados }}</td>
                 <td>{{ $value->numeroempleadosasistentes }}</td>
+                @if (Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
+                    <td>
+                       <div class="btn-group-horizontal">
+                           <a class="   " href="{{ URL::to('clientes/' . $value->id) }}"><i class="fa fa-info-circle"></i></a>
+                           <a class="   " href="{{ URL::to('clientes/' . $value->id . '/edit') }}"><i class="fa fa-ellipsis-h"></i></a>
+                       </div>
+                    </td>
+                    <td>
+                       {{ Form::open(array('url' => 'clientes/' . $value->id, 'class' => '')) }}
+                           {{ Form::hidden('_method', 'DELETE') }}
+                           {{ Form::submit('Borrar', array('class' => 'btn btn-outline-danger btn-sm btn-block' )) }}
+<!--                           {{ Form::button('<i class="fa fa-trash  fa-2x"></i>', ['type' => 'submit', 'class' => ''] )  }}-->
+                           {{ Form::close() }} 
+                    </td>
+                @endif
             </tr>
             @endforeach
         </tbody>

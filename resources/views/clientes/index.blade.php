@@ -5,13 +5,12 @@
 @section('content')
 
 @if (Session::has('message'))
-<div class="alert alert-info">{{ Session::get('message') }}</div>
+    <div class="alert alert-info">{{ Session::get('message') }}</div>
 @endif
 <div class="container">
     <table id="tablagenerica" class="table table-striped table-bordered display nowrap" style="width:100%">
         <thead class="thead-dark">
             <tr>
-                
 <!--                <td>Código</td>-->
                 <td>Cif</td>
                 <td>Razón social</td>             
@@ -23,7 +22,8 @@
                 <td>R.Contratados</td>
                 <td>R.Utilizados</td>     
                 @if (Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
-                    <td>Acciones</td>
+                    <td></td>
+                    <td></td>
                 @endif
             </tr>
         </thead>
@@ -34,7 +34,7 @@
                 <td>{{ $value->cif }}</td>
                 <td>{{ $value->razonsocial }}</td>
                 
-<!--                <td>{{ $value->direccion }}</td>
+<!--            <td>{{ $value->direccion }}</td>
                 <td>{{ $value->city_name }}</td>
                 <td>{{ $value->region_name }}</td>-->
                 <td>{{ $value->fechainiciocontrato }}</td>
@@ -43,14 +43,17 @@
                 <td>{{ $value->numeroreconocimientosutilizados }}</td>
                 @if (Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
                     <td>
-                       <div class="btn-group-vertical">
-                           {{ Form::open(array('url' => 'clientes/' . $value->id, 'class' => 'pull-right')) }}
+                       <div class="btn-group-horizontal">
+                           <a class="   " href="{{ URL::to('clientes/' . $value->id) }}"><i class="fa fa-info-circle"></i></a>
+                           <a class="   " href="{{ URL::to('clientes/' . $value->id . '/edit') }}"><i class="fa fa-ellipsis-h"></i></a>
+                       </div>
+                    </td>
+                    <td>
+                       {{ Form::open(array('url' => 'clientes/' . $value->id, 'class' => '')) }}
                            {{ Form::hidden('_method', 'DELETE') }}
                            {{ Form::submit('Borrar', array('class' => 'btn btn-outline-danger btn-sm btn-block' )) }}
-                           {{ Form::close() }}
-                           <a class="btn btn-outline-success btn-sm btn-block" href="{{ URL::to('clientes/' . $value->id) }}">Detalles</a>
-                           <a class="btn btn-outline-info btn-sm btn-block" href="{{ URL::to('clientes/' . $value->id . '/edit') }}">Editar</a>
-                       </div>
+<!--                           {{ Form::button('<i class="fa fa-trash  fa-2x"></i>', ['type' => 'submit', 'class' => ''] )  }}-->
+                           {{ Form::close() }} 
                     </td>
                 @endif
             </tr>
