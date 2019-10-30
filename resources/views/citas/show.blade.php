@@ -11,7 +11,8 @@
         <p>
             <strong>Fecha:</strong> {{ $cita->fecha }}<br>
             <strong>Reconocimientos Reservados:</strong> {{ $cita->numeroempleadosreservados}}<br>
-           
+            <br>
+            <strong>Reconocimientos Utilizados:</strong> {{ $cita->numeroempleadosasistentes}}<br>       
         </p>
     </div>
     

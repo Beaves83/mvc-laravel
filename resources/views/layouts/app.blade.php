@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <!-- Head -->
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -25,8 +26,10 @@
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     </head>
+    <!-- Head -->
     <body >
         <div id="app">
+            <!-- NavBar -->
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ url('/') }}">
@@ -39,36 +42,39 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <!-- Left Side Of Navbar -->
                         <ul class="navbar-nav mr-auto">
-                            
+
                             @guest
-                            
+
                             @else 
-                            @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario'))
+                            @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario')
+                            OR Auth::user()->hasRole('medico'))
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('clientes') }}">Listado clientes</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('citas') }}">Listado citas</a>
+                            </li>  
+                            @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('clientes/create') }}">Crear un cliente</a>
+                            </li>    
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('citas/create') }}">Crear una cita</a>
                             </li>
+                            @endif
+                            @if ( Auth::user()->hasRole('admin') )
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('usuarios') }}">Listado usuarios</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('clientes/create') }}">Crear un cliente</a>
-                            </li>    
-                             <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('citas/create') }}">Crear una cita</a>
+                                <a class="nav-link" href="{{ URL::to('usuarios/create') }}">Crear un usuario</a>
                             </li>
-                            
                             @endif
-                            @if ( Auth::user()->hasRole('admin') )
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ URL::to('usuarios/create') }}">Crear un usuario</a>
-                                </li>
                             @endif
-                            
-                            
-                            
+
+
+
+
                             @endguest
                         </ul>
 
@@ -107,7 +113,7 @@
                     </div>
                 </div>
             </nav>
-
+            <!-- NavBar -->
             <main class="py-4" style="margin-top:50px">
                 @yield('content')
             </main>

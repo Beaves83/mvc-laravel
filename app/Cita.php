@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use App\Cita;
 
+
 class Cita extends Model {
 
     protected $table = 'citas';
@@ -20,6 +21,14 @@ class Cita extends Model {
         $listado = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
                 ->select('citas.*', 'clientes.razonsocial')
                 ->get();
+
+        return $listado;
+    }
+    
+    //Devolvemos las cabeceras para la tabla
+    public static function headers() {
+        $listado = array('Cliente', 'Fecha', 'Empleados reservados',
+            'Asistencias');
 
         return $listado;
     }

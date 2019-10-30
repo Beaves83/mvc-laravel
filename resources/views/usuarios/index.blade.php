@@ -11,9 +11,10 @@
     <table id="tablagenerica" class="table table-striped table-bordered display nowrap">
         <thead class="">
             <tr>
-                <td>Nombre</td>
-                <td>Email</td>
-                <td>Rol</td>
+                @foreach($headers as $header)
+                    <td>{{ $header }}</td>
+                @endforeach 
+                
                 @if (Auth::user()->hasRole('admin'))
                 <td></td>
                 <td></td>

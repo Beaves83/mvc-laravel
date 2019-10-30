@@ -44,7 +44,7 @@ $(document).ready( function () {
         //fixedHeader: true
     } );
     
-    tablagenerica.columns.adjust().draw();
+    //tablagenerica.columns.adjust().draw();
     
     //#endregion
 

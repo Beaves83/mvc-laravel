@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Cliente;
+use App\Provincia;
+use App\Municipio;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
 
@@ -15,7 +17,8 @@ class ClienteController extends Controller {
      */
     public function index() {
         $clientes = Cliente::allClient();
-        return view('clientes.index')->with('clientes', $clientes);
+        $headers = Cliente::headers();
+        return view('clientes.index', compact(['clientes', 'headers']));
     }
 
     /**
@@ -25,7 +28,9 @@ class ClienteController extends Controller {
      */
     public function create() {
         auth()->user()->authorizeRoles(['admin','secretario']);
-        return view('clientes.create');
+        $provincias = Provincia::all('region_name', 'id');
+        $municipios = Municipio::all('city_name','id','region_id');
+        return view('clientes.create', compact(['provincias','municipios']));
     }
 
     /**
@@ -92,8 +97,11 @@ class ClienteController extends Controller {
      */
     public function edit($id) {
         auth()->user()->authorizeRoles(['admin','secretario']);
-        $cliente = Cliente::getCliente($id);
-        return view("clientes.edit")->with('cliente', $cliente[0]);
+        $cliente = Cliente::getCliente($id)[0];
+        $provincias = Provincia::all('region_name', 'id');
+        $municipios = Municipio::all('city_name','id','region_id');
+        return view('clientes.edit', compact(['cliente','provincias','municipios']));
+        //return view("clientes.edit")->with('cliente', $cliente[0]);
     }
 
     /**

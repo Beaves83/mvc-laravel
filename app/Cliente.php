@@ -23,6 +23,14 @@ class Cliente extends Model {
 
         return $listado;
     }
+    
+    //Devolvemos las cabeceras para la tabla
+    public static function headers() {
+        $listado = array('CIF/NIF', 'Razón social', 'Fecha inicio contrato',
+            'Fecha fin contrato', 'R.Contratados', 'R.Utilizados');
+
+        return $listado;
+    }
 
     //Cruzamos la tabla de clientes con municipios y provincias y filtramos por el id.
     public static function getCliente($id) {

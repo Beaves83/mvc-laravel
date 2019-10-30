@@ -11,16 +11,10 @@
     <table id="tablagenerica" class="table table-striped table-bordered display nowrap">
         <thead class="">
             <tr>
-<!--                <td>Código</td>-->
-                <td>Cif</td>
-                <td>Razón social</td>             
-<!--                <td>Dirección</td>
-                <td>Municipio</td>
-                <td>Provincia</td>-->
-                <td>Fecha inicio contrato</td>
-                <td>Fecha fin contrato</td>
-                <td>R.Contratados</td>
-                <td>R.Utilizados</td>     
+                @foreach($headers as $header)
+                    <td>{{ $header }}</td>
+                @endforeach  
+                
                 @if (Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
                 <td></td>
                 <td></td>

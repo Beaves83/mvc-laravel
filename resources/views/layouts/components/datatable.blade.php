@@ -1,13 +1,9 @@
-@extends('layouts.app')
+@section('datatable')
 
-@section('title', 'Crear un cliente')
-
-@section('content')
-<!-- if there are creation errors, they will show here -->
 {{ Html::ul($errors->all()) }}
 <div class="jumbotron w-50 mx-auto border shadow-lg p-4 mb-4 bg-white">
-    <div class="jumbotron h-25 d-flex justify-content-center"><h1>Creación de clientes</h1></div>
-    {{ Form::open(array('url' => 'clientes')) }}
+    <div class="jumbotron h-25 d-flex justify-content-center"><h1>Edición de clientes</h1></div>
+    {{ Form::model($cliente, array('route' => array('clientes.update', $cliente->id), 'method' => 'PUT')) }}
 
     <div class="form-group">
         {{ Form::label('codigo', 'Código') }}
@@ -28,15 +24,15 @@
         {{ Form::label('direccion', 'Dirección') }}
         {{ Form::text('direccion', null, array('class' => 'form-control')) }}
     </div>
-    
-    <div class="form-group">
-        {{ Form::label('provincia', 'Provincia') }}
-        {{ Form::select('provincias', $provincias->pluck('region_name', 'id'), null, array('class' => 'form-control')) }}
-    </div>
 
     <div class="form-group">
         {{ Form::label('municipio', 'Municipio') }}
-        {{ Form::select('municipios', $municipios->pluck('city_name', 'id'), null, array('class' => 'form-control')) }}
+        {{ Form::select('municipios') }}
+    </div>
+
+    <div class="form-group">
+        {{ Form::label('provincia', 'Provincia') }}
+        {{ Form::select('provincias') }}
     </div>
 
     <div class="form-group">
@@ -54,10 +50,10 @@
         {{ Form::number('numeroreconocimientoscontratados', null, array('class' => 'form-control')) }}
     </div>
 
-
     <div class="d-flex justify-content-center">
-        {{ Form::submit('Crear', array('class' => 'btn btn-primary')) }}
+        {{ Form::submit('Actualizar', array('class' => 'btn btn-primary')) }}
     </div>
+
     {{ Form::close() }}
 
 </div>

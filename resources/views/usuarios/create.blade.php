@@ -21,7 +21,7 @@
 
     <div class="form-group">
         {{ Form::label('password', 'Contraseña') }}
-        {{ Form::password('password', null, array('class' => 'form-control')) }}
+        {{ Form::password('password',  array('class' => 'form-control')) }}
     </div>
 
 <div class="d-flex justify-content-center">

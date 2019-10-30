@@ -55,6 +55,13 @@ class User extends Authenticatable {
 
         return $listado;
     }
+    
+    //Devolvemos las cabeceras para la tabla
+    public static function headers() {
+        $listado = array('Nombre', 'Email', 'Rol');
+
+        return $listado;
+    }
 
     public function authorizeRoles($roles) {
         

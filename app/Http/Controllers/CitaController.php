@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
-use App\Cliente;
+
 use App\Cita;
+use App\Cliente;
 
 class CitaController extends Controller {
 
@@ -16,7 +17,8 @@ class CitaController extends Controller {
      */
     public function index() {
         $citas = Cita::allAppointment();
-        return view('citas.index')->with('citas', $citas);
+        $headers = Cita::headers();
+        return view('citas.index', compact(['citas', 'headers']));
     }
 
     /**
@@ -26,7 +28,8 @@ class CitaController extends Controller {
      */
     public function create() {
         auth()->user()->authorizeRoles(['admin','secretario']);
-        return view('citas.create');
+        $clientes = Cliente::all('razonsocial', 'id');
+        return view('citas.create', compact(['clientes']));
     }
 
     /**
@@ -81,13 +84,13 @@ class CitaController extends Controller {
      * @return Response
      */
     public function edit($id) {
-        auth()->user()->authorizeRoles(['admin','secretario']);
+        auth()->user()->authorizeRoles(['admin','secretario', 'medico']);
         $cita = Cita::find($id);
 
-        if ($cita->numeroempleadosasistentes > 0) {
-            \Session::flash('message', 'La cita no se puede modificar porque ya ha habido asistentes a la consulta.');
-            return \Redirect::to('citas');
-        }
+//        if ($cita->numeroempleadosasistentes > 0) {
+//            \Session::flash('message', 'La cita no se puede modificar porque ya ha habido asistentes a la consulta.');
+//            return \Redirect::to('citas');
+//        }
         return view("citas.edit")->with('cita', $cita);
     }
 

@@ -15,15 +15,23 @@
     </div>
 
     <div class="form-group">
-        {{ Form::label('numeroempleadosreservados', 'Número de reservas') }}
+        {{ Form::label('numeroempleadosreservados', 'Reconocimientos reservados') }}
         {{ Form::number('numeroempleadosreservados', null, array('class' => 'form-control')) }}
     </div>
+   
+<!--    Faltarían los contratados-->
 
+@if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('medico') )  
+    <div class="form-group">
+        {{ Form::label('numeroempleadosasistentes', 'Asistientes') }}
+        {{ Form::number('numeroempleadosasistentes', null, array('class' => 'form-control')) }}
+    </div>
+
+@endif
+    
 <div class="d-flex justify-content-center">
         {{ Form::submit('Actualizar', array('class' => 'btn btn-primary')) }}
     </div>
-    
-
 {{ Form::close() }}
 
 </div>

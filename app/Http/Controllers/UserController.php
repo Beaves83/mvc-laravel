@@ -15,7 +15,8 @@ class UserController extends Controller {
      */
     public function index() {
         $usuarios = User::allUser();
-        return view('usuarios.index')->with('usuarios', $usuarios);
+        $headers = User::headers();
+        return view('usuarios.index', compact(['usuarios', 'headers']));
     }
     
     /**

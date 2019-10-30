@@ -24,6 +24,7 @@ Route::get('citas/{cita}', 'CitaController@show')->name('citas.show');
 Route::get('citas/{cita}/edit', 'CitaController@edit')->name('citas.edit');
 Route::put('citas/{cita}', 'CitaController@update')->name('citas.update');
 Route::delete('citas/{cita}', 'CitaController@destroy')->name('citas.destroy');
+Route::get('citas/{cita}/edit', 'CitaController@edit')->name('citas.edit');
 
 Route::get('citas/confirmReserve', 'CitaController@confirmReserve')->name('citas.confirmReserve');
 
