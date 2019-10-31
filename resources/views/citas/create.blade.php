@@ -9,7 +9,6 @@
     <div class="jumbotron h-25 d-flex justify-content-center"><h1>Creación de citas</h1></div>
     {{ Form::open(array('url' => 'citas')) }}
 
-
     <div class="form-group">
         {{ Form::label('razonsocial', 'Cliente') }}
         {{ Form::select('clientes', $clientes->pluck('razonsocial', 'id'), null, array('class' => 'form-control')) }}
@@ -29,10 +28,7 @@
         {{ Form::submit('Crear', array('class' => 'btn btn-primary')) }}
     </div>
 
-
     {{ Form::close() }}
-
-
 </div>
 </div>
 @endsection

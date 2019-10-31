@@ -3,15 +3,14 @@
 @section('title', 'Datos de una cita')
 
 @section('content')
-
-    <h1>Cita para el cliente : {{ $cita->razonsocial }}</h1>
     
-    <div class="jumbotron text-center">
-        
+<div class="jumbotron w-50 mx-auto border shadow-lg p-4 mb-4 bg-white">
+    <div class="jumbotron h-25 d-flex justify-content-center"><h1>Información</h1></div>    
         <p>
-            <strong>Fecha:</strong> {{ $cita->fecha }}<br>
+            <strong>Cliente:</strong>  {{ $cita->razonsocial }}<br>
+            <strong>Fecha de la cita:</strong> {{ $cita->fecha }}<br>
+            <br>         
             <strong>Reconocimientos Reservados:</strong> {{ $cita->numeroempleadosreservados}}<br>
-            <br>
             <strong>Reconocimientos Utilizados:</strong> {{ $cita->numeroempleadosasistentes}}<br>       
         </p>
     </div>

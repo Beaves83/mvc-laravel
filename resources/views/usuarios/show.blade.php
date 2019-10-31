@@ -3,15 +3,13 @@
 @section('title', 'Datos de un usuario')
 
 @section('content')
-
-    <h1>Usuario : {{ $usuario->name }}</h1>
     
-    <div class="jumbotron text-center">
+<div class="jumbotron w-50 mx-auto border shadow-lg p-4 mb-4 bg-white">
+    <div class="jumbotron h-25 d-flex justify-content-center"><h1>Información</h1></div>
         
         <p>
-            <strong>Email:</strong> {{ $usuario->email }}<br>
-           
-           
+            <strong>Usuario:</strong> {{ $usuario->name }}<br>
+            <strong>Email:</strong> {{ $usuario->email }}<br>  
         </p>
     </div>
     

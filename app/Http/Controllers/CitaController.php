@@ -73,8 +73,9 @@ class CitaController extends Controller {
      * @return a view.
      */
     public function show($id) {
-        $citas = Cita::getCita($id);
-        return view('citas.show')->with('cita', $citas[0]);
+        $cita = Cita::getCita($id)[0];
+        $cliente = Cliente::find($cita->cliente_id);
+        return view("citas.show", compact(['cita','cliente']));
     }
 
     /**
@@ -85,13 +86,15 @@ class CitaController extends Controller {
      */
     public function edit($id) {
         auth()->user()->authorizeRoles(['admin','secretario', 'medico']);
+        
         $cita = Cita::find($id);
-
-//        if ($cita->numeroempleadosasistentes > 0) {
-//            \Session::flash('message', 'La cita no se puede modificar porque ya ha habido asistentes a la consulta.');
-//            return \Redirect::to('citas');
-//        }
-        return view("citas.edit")->with('cita', $cita);
+        $cliente = Cliente::find($cita->cliente_id);
+        $bloqueada = false;
+        if ($cita->numeroempleadosasistentes > 0 or auth()->user()->roles()->get()->first()->name == 'medico' ) {
+            \Session::flash('message', 'La cita no se puede modificar porque ya ha habido asistentes a la consulta.');
+            $bloqueada = true;
+        }
+        return view("citas.edit", compact(['cita','cliente','bloqueada']));
     }
 
     /**
@@ -101,7 +104,7 @@ class CitaController extends Controller {
      * @return Response
      */
     public function update($id) {
-        auth()->user()->authorizeRoles(['admin','secretario']);
+        auth()->user()->authorizeRoles(['admin','secretario', 'medico']);
         $rules = array(
 //            'clientes'      => 'required|numeric',
             'fecha' => 'required|date|after:today',
@@ -114,15 +117,14 @@ class CitaController extends Controller {
                             ->withErrors($validator)
                             ->withInput(Input::except('password'));
         } else {
-            Cita::where('id', $id)
-                    ->update(
-                            [
-//                                'cliente_id' => Input::get('clientes'),
-                                'fecha' => Input::get('fecha'),
-                                'numeroempleadosreservados' => Input::get('numeroempleadosreservados')
-//                                'numeroempleadosasistentes' => Input::get('numeroempleadosasistentes')
-            ]);
-
+            $cita = Cita::find($id);
+            $cita->fecha = Input::get('fecha');
+            $cita->numeroempleadosreservados = Input::get('numeroempleadosreservados');
+            if(Input::get('numeroempleadosasistentes') != null){
+                $cita->numeroempleadosasistentes = Input::get('numeroempleadosasistentes');
+            }    
+            $cita->update();
+                  
             \Session::flash('message', 'Cita actualizada');
             return \Redirect::to('citas');
         }

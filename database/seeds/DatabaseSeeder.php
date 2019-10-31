@@ -20,8 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(UserTestsSeeder::class);
            
         //Rellenamos la BBDD con valores.
-        factory(App\Cliente::class, 10)->create();
-        factory(App\Cita::class, 10)->create();
-        //factory(App\User::class, 100)->create();
+        factory(App\Cliente::class, 100)->create();
+        factory(App\Cita::class, 500)->create();
     }
 }
