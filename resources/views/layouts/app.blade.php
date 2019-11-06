@@ -49,6 +49,9 @@
                             @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario')
                             OR Auth::user()->hasRole('medico'))
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ URL::to('citas/calendar') }}">Calendario</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('clientes') }}">Listado clientes</a>
                             </li>
                             <li class="nav-item">

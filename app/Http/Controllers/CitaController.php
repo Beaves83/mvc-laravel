@@ -154,5 +154,16 @@ class CitaController extends Controller {
     public function all() {
         return response()->json(Cita::reservartionsWithClient());
     }
+    
+    
+    /**
+     * Default page for showing the calendar.
+     *
+     * @return a view with and the list of the task in the calendar.
+     */
+    public function calendar() {
+        $citas = Cita::allAppointment();
+        return view('citas.calendar', compact(['citas']));
+    }
 
 }
