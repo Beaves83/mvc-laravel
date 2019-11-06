@@ -10,6 +10,16 @@
 
 _La aplicación consiste en un sistema de gestión de citas médicas para un centro que realiza reconocimientos para empresas._
 
+El sitema cuenta con tres perfiles disponibles, con los cuales accederemos a distintas opciones que nos ofrede el GRM. Los tres roles
+que tenemos serán **Secretario**, **Médico** y **Administrador**.  
+
+**Secreatario** - Tendrá acceso a todos los listados. Puede crear clientes y citas. Puede modificar citas siempre y cuando no se haya realizado ninguna consulta en esa cita.  
+
+**Médico** - Tendrá acceso a todos los listados. Puedes actualziar el número de consultas realizadas en una cita.  
+
+**Administrador** - Tendrá acceso a todos los listados. Puede crear clientes, citas y usuarios. Puede modificar citas siempre y cuando no se haya realizado ninguna consulta en esa cita.  
+
+
 ## Construido con 🛠️
 
 _El proyecto ha sido creado con:_
@@ -35,11 +45,25 @@ $ php artisan migrate --seed
 ```
 Este último paso tardará unos minutos porque vamos a generar datos de prueba.
 
+Por defecto se crearán tres usuarios con los cuales podemos realizar las pruebas, un usuario para cada rol distintos.
+
+**Usuario:** admin@email.es  
+**Contraseña:** admin@email.es  
+**Rol:** Administrador  
+
+**Usuario:** secretario@email.es  
+**Contraseña:** secretario@email.es  
+**Rol:** Secretario  
+
+**Usuario:** medico@email.es  
+**Contraseña:** medico@email.es  
+**Rol:** Médico  
+
 
 ## Autor :man:
 
 * **Bibiano Ruiz** - *Creador del proyecto.* - [beaves83](https://github.com/Beaves83/)
 
-## Versión 0.2 :computer:
+## Versión 0.5 :computer:
 
 _El proyecto no está completo, aun no tengo terminada la primera versión._
