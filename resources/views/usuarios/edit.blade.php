@@ -15,16 +15,16 @@
     </div>
 
     <div class="form-group">
+        {{ Form::label('rol', 'Rol') }}
+        {{ Form::select('roles', $roles->pluck('description', 'id'), null, array('class' => 'form-control',  'placeholder' => 'Selecciona un rol...')) }}
+    </div>
+
+    <div class="form-group">
         {{ Form::label('email', 'Email') }}
         {{ Form::text('email', null, array('class' => 'form-control')) }}
     </div>
 
-<!--    <div class="form-group">
-        {{ Form::label('password', 'Contraseña') }}
-        {{ Form::text('password', null, array('class' => 'form-control')) }}
-    </div>-->
-
-<div class="d-flex justify-content-center">
+    <div class="d-flex justify-content-center">
         {{ Form::submit('Actualizar', array('class' => 'btn btn-primary')) }}
     </div>
     

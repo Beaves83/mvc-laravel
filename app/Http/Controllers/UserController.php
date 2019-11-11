@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Role;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
 
@@ -26,7 +27,8 @@ class UserController extends Controller {
      */
     public function create() {     
         auth()->user()->authorizeRoles(['admin']);
-        return view('usuarios.create');
+        $roles = Role::all('description', 'id');
+        return view('usuarios.create', compact(['roles']));
     }
     
     /**
@@ -41,24 +43,24 @@ class UserController extends Controller {
             'name' => 'required|max:190',
             'email' => 'required|email|unique:users|max:190',
             'password' => 'required',
-//            'rol' => 'required',
+            'roles' => 'required'
         );
         $validator = \Validator::make(Input::all(), $rules);
-        //dd(Input::all());
         if ($validator->fails()) {
             return \Redirect::to('usuarios/create')
                             ->withErrors($validator)
                             ->withInput(Input::except('password'));
         } else {
 
-            $user = new User();
-            
+            $user = new User();           
             $user->name = Input::get('name');
+            $user->email_verified_at = new \DateTime();
             $user->password = hash('sha256', Input::get('password'));
-//            $user->rol = Input::get('rol');
-            $user->email = Input::get('email');
-            
+            $user->email = Input::get('email');         
             $user->save();
+
+            //Añadimos entrada en el tabla que relaciona Roles con Usuarios.
+            $user->roles()->attach(Role::where('id', Input::get('roles'))->first());
 
             \Session::flash('message', 'Usuario creado');
             return \Redirect::to('usuarios');
@@ -74,6 +76,7 @@ class UserController extends Controller {
     public function show($id) {
         $usuario = User::find($id);
         return view('usuarios.show')->with('usuario', $usuario);
+        
     }
     
     /**
@@ -85,7 +88,8 @@ class UserController extends Controller {
     public function edit($id) {
         auth()->user()->authorizeRoles(['admin']);  
         $usuario = User::find($id);
-        return view("usuarios.edit")->with('usuario', $usuario);
+        $roles = Role::all('description', 'id');
+        return view('usuarios.edit', compact(['usuario', 'roles']));
     }
     
     /**
@@ -99,8 +103,7 @@ class UserController extends Controller {
         $rules = array(
             'name' => 'required|max:190',
             'email' => 'required|email|max:190|unique:users,email,'. $id . ',id',
-//            'password' => 'required',
-//            'rol' => 'required',
+            'roles' => 'required',
         );
         
         $validator = Validator(Input::all(), $rules);
@@ -113,10 +116,14 @@ class UserController extends Controller {
                     ->update(
                             [
                                 'name' => Input::get('name'),
-                                'email' => Input::get('email'),
-//                                'password' => hash('sha256', Input::get('password')),
-//                                'rol' => Input::get('rol')     
+                                'email' => Input::get('email') 
             ]);
+            $user = User::find($id);
+            
+            //Añadimos entrada en el tabla que relaciona Roles con Usuarios.
+            $user->roles()->detach();
+            $user->roles()->attach(Role::where('id', Input::get('roles'))->first());
+            
             \Session::flash('message', 'Usuario actualizado');
             return \Redirect::to('usuarios');
         }

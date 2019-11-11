@@ -14,7 +14,7 @@ class UserTestsSeeder extends Seeder
     {
         //Creamos usuario con el perfil de Administrador
         $user = new User();
-        $user->name = 'Administrador';
+        $user->name = 'Administrador de pruebas';
         $user->password = Hash::make('admin@email.es');
         $user->email = 'admin@email.es';
         $user->email_verified_at = new \DateTime();
@@ -25,7 +25,7 @@ class UserTestsSeeder extends Seeder
              
         //Creamos usuario con el perfil de Secretario
         $user = new User();
-        $user->name = 'Secretario';
+        $user->name = 'Secretario de pruebas';
         $user->password = Hash::make('secretario@email.es');
         $user->email = 'secretario@email.es';
         $user->email_verified_at = new \DateTime();
@@ -36,7 +36,7 @@ class UserTestsSeeder extends Seeder
         
         //Creamos usuario con el perfil de Médico
         $user = new User();
-        $user->name = 'Médico';
+        $user->name = 'Médico de pruebas';
         $user->password = Hash::make('medico@email.es');
         $user->email = 'medico@email.es';
         $user->email_verified_at = new \DateTime();
