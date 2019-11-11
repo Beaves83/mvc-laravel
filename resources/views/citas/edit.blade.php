@@ -19,7 +19,7 @@
                     ,'readonly' => true)) }}
     </div>
     <div class="form-group">
-        {{ Form::label('razonsocial', 'Nombre cliente') }}
+        {{ Form::label('razonsocial', 'Cliente') }}
         {{ Form::text($cliente->razonsocial, $cliente->razonsocial, array('class' => 'form-control'
                     ,'readonly' => true)) }}
     </div>
@@ -49,7 +49,7 @@
 
     @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('medico') )  
     <div class="form-group">
-        {{ Form::label('numeroempleadosasistentes', 'Asistientes') }}
+        {{ Form::label('numeroempleadosasistentes', 'Asistentes') }}
         {{ Form::number('numeroempleadosasistentes', null, array('class' => 'form-control')) }}
     </div>
 

@@ -23,7 +23,12 @@
         {{ Form::label('numeroempleadosreservados', 'Número de reservas') }}
         {{ Form::number('numeroempleadosreservados', null, array('class' => 'form-control')) }}
     </div>
-
+    
+<!--    <div class="range-field">
+       {{ Form::label('numeroempleadosreservados', 'Número de reservas') }}
+        <input type="range" class="custom-range" name="numeroempleadosreservados" min="0" max="100">
+        {{ Form::number('numeroempleadosreservados', null, array('class' => 'form-control')) }}
+    </div>-->
     <div class="d-flex justify-content-center">
         {{ Form::submit('Crear', array('class' => 'btn btn-primary')) }}
     </div>

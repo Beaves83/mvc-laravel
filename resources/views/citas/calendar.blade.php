@@ -30,13 +30,13 @@
         buttonText: {
           today: 'Hoy',
           month: 'Mes',
-          day: 'Dia',
+          day: 'Día',
           week: 'Semana',
           year: 'Año'
 	},
         monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
 	monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sept','Oct','Nov','Dic'],
-	dayNames: ['Domingo','Lunes','Martes','Miercoles','Jueves','Viernes','Sabado'],
+	dayNames: ['Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado'],
 	dayNamesShort: ['Do','Lu','Ma','Mi','Ju','Vi','Sa'],
             events : [
                     @foreach($citas as $cita)

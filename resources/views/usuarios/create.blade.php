@@ -16,7 +16,7 @@
 
     <div class="form-group">
         {{ Form::label('rol', 'Rol') }}
-        {{ Form::select('roles', $roles->pluck('description', 'id'), null, array('class' => 'form-control',  'placeholder' => 'Selecciona un rol...')) }}
+        {{ Form::select('roles', $roles->pluck('description', 'id'), null, array('class' => 'form-control',  'placeholder' => 'Selecciona un rol...')) }}   
     </div>
 
     <div class="form-group">

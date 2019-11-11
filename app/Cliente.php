@@ -26,8 +26,8 @@ class Cliente extends Model {
     
     //Devolvemos las cabeceras para la tabla
     public static function headers() {
-        $listado = array('CIF/NIF', 'Razón social', 'Fecha inicio contrato',
-            'Fecha fin contrato', 'R.Contratados', 'R.Utilizados');
+        $listado = array('CIF/NIF', 'Razón social', 'Inicio contrato',
+            'Fin contrato', 'R.Contratados', 'R.Utilizados');
 
         return $listado;
     }

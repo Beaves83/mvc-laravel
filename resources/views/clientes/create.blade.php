@@ -15,7 +15,7 @@
     </div>
 
     <div class="form-group">
-        {{ Form::label('razonsocial', 'Razon social') }}
+        {{ Form::label('razonsocial', 'Razón social') }}
         {{ Form::text('razonsocial', null, array('class' => 'form-control')) }}
     </div>
 
@@ -50,7 +50,7 @@
     </div> 
 
     <div class="form-group">
-        {{ Form::label('numeroreconocimientoscontratados', 'Reconocimiento a contratar') }}
+        {{ Form::label('numeroreconocimientoscontratados', 'Reconocimientos a contratar') }}
         {{ Form::number('numeroreconocimientoscontratados', null, array('class' => 'form-control')) }}
     </div>
 

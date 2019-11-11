@@ -24,13 +24,8 @@
         <tbody>
             @foreach($clientes as $key => $value)
             <tr>      
-<!--                <td>{{$value->codigo}}</td>-->
                 <td>{{ $value->cif }}</td>
                 <td>{{ $value->razonsocial }}</td>
-
-<!--            <td>{{ $value->direccion }}</td>
-<td>{{ $value->city_name }}</td>
-<td>{{ $value->region_name }}</td>-->
                 <td>{{ $value->fechainiciocontrato }}</td>
                 <td>{{ $value->fechafincontrato }}</td>     
                 <td>{{ $value->numeroreconocimientoscontratados }}</td>
