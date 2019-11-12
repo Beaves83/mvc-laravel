@@ -45,6 +45,10 @@ $ php artisan migrate --seed
 ```
 Este último paso tardará unos minutos porque vamos a generar datos de prueba.
 
+_NOTA: Si ya he descargado el proyecto anteriormente, tendría que refactorizar todo y hacer una nueva población de la BBDD para que todo nos funcione bien con el siguiente comando:_
+```
+php artisan migrate:refresh --seed
+```
 Por defecto se crearán tres usuarios con los cuales podemos realizar las pruebas, un usuario para cada rol distintos.
 
 **Usuario:** admin@email.es  
