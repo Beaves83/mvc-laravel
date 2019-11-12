@@ -32,6 +32,7 @@
                     <div class="btn-group-horizontal">
                         <a class="   " href="{{ URL::to('usuarios/' . $value->id) }}"><i class="fa fa-info-circle"></i></a>
                         <a class="   " href="{{ URL::to('usuarios/' . $value->id . '/edit') }}"><i class="fa fa-pencil-square-o"></i></a>
+                        <a class="   " href="{{ URL::to('usuarios/' . $value->id . '/pdf') }}"><i class="fa fa-file-pdf-o"></i></a>
                     </div>
                 </td>
                 <td>

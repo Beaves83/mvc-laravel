@@ -30,11 +30,18 @@
                 <td>{{ $value->fechafincontrato }}</td>     
                 <td>{{ $value->numeroreconocimientoscontratados }}</td>
                 <td>{{ $value->numeroreconocimientosutilizados }}</td>
+                @if ($value->activo)
+                <td><input type="checkbox" value="{{ $value->activo }}" readonly ="true" checked /></td>
+                @else
+                <td><input type="checkbox" value="{{ $value->activo }}" readonly ="true" /></td>
+                @endif
+                
                 @if (Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
                 <td>
                     <div class="btn-group-horizontal">
                         <a class="   " href="{{ URL::to('clientes/' . $value->id) }}"><i class="fa fa-info-circle"></i></a>
                         <a class="   " href="{{ URL::to('clientes/' . $value->id . '/edit') }}"><i class="fa fa-pencil-square-o"></i></a>
+                        <a class="   " href="{{ URL::to('clientes/' . $value->id . '/pdf') }}"><i class="fa fa-file-pdf-o"></i></a>
                     </div>
                 </td>
                 <td>

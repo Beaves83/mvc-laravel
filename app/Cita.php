@@ -52,5 +52,10 @@ class Cita extends Model {
     public static function citasDiarias($query, $fecha) {
         return $query->where('fecha', $fecha);
     }
+    
+    //Actualizamos el estado del contrato
+    public static function chequearContratoActivo(){
+        
+    }
 
 }

@@ -7,6 +7,7 @@
 @if (Session::has('message'))
 <div class="alert alert-info">{{ Session::get('message') }}</div>
 @endif
+
 <div class="container">
     <table id="tablagenerica" class="table table-striped table-bordered display nowrap">
         <thead>
@@ -32,6 +33,7 @@
                     <div class="btn-group-horizontal">
                         <a class="   " href="{{ URL::to('citas/' . $value->id) }}"><i class="fa fa-info-circle"></i></a>
                         <a class="   " href="{{ URL::to('citas/' . $value->id . '/edit') }}"><i class="fa fa-pencil-square-o"></i></a>
+                        <a class="   " href="{{ URL::to('citas/' . $value->id . '/pdf') }}"><i class="fa fa-file-pdf-o"></i></a>
                     </div>
                 </td>
                 @if (Auth::user()->hasRole('admin'))

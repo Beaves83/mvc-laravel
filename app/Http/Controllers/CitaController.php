@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Input;
 
 use App\Cita;
 use App\Cliente;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class CitaController extends Controller {
 
@@ -59,7 +60,7 @@ class CitaController extends Controller {
             $cita->numeroempleadosreservados = Input::get('numeroempleadosreservados');
             $cita->numeroempleadosasistentes = 0;
 
-            $cita->save();
+            $cita->save();                      
 
             \Session::flash('message', '¡Cita creada!');
             return \Redirect::to('citas');
@@ -94,6 +95,7 @@ class CitaController extends Controller {
             \Session::flash('message', 'La cita no se puede modificar porque ya ha habido asistentes a la consulta.');
             $bloqueada = true;
         }
+                
         return view("citas.edit", compact(['cita','cliente','bloqueada']));
     }
 
@@ -121,7 +123,7 @@ class CitaController extends Controller {
             $cita->fecha = Input::get('fecha');
             $cita->numeroempleadosreservados = Input::get('numeroempleadosreservados');
             if(Input::get('numeroempleadosasistentes') != null){
-                $cita->numeroempleadosasistentes = Input::get('numeroempleadosasistentes');
+                $cita->numeroempleadosasistentes = Input::get('numeroempleadosasistentes');                
             }    
             $cita->update();
                   
@@ -166,4 +168,11 @@ class CitaController extends Controller {
         return view('citas.calendar', compact(['citas']));
     }
 
+    public function citapdf($id)
+    {        
+        $cita = Cita::getCita($id)[0];
+        $cliente = Cliente::find($cita->cliente_id);
+        $pdf = PDF::loadView("citas.pdf", compact(['cita','cliente']));
+        return $pdf->download("cita".$cita->razonsocial."".$cita->fecha.".pdf");
+    }
 }

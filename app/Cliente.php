@@ -27,7 +27,7 @@ class Cliente extends Model {
     //Devolvemos las cabeceras para la tabla
     public static function headers() {
         $listado = array('CIF/NIF', 'Razón social', 'Inicio contrato',
-            'Fin contrato', 'R.Contratados', 'R.Utilizados');
+            'Fin contrato', 'R.Contratados', 'R.Utilizados', 'Activo');
 
         return $listado;
     }
@@ -44,4 +44,7 @@ class Cliente extends Model {
         return $cliente;
     }
 
+    public static function updateContratosActivos() {
+        //DB::table('clientes')
+    }
 }

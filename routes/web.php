@@ -15,6 +15,7 @@ Route::get('clientes/{cliente}/edit', 'ClienteController@edit')->name('clientes.
 Route::put('clientes/{cliente}', 'ClienteController@update')->name('clientes.update');
 Route::delete('clientes/{cliente}', 'ClienteController@destroy')->name('clientes.destroy');
 Route::get('clientslist', 'ClienteController@clientslist')->name('clientes.clientslist');
+Route::get('clientes/{cliente}/pdf', 'ClienteController@clientepdf')->name('clientes.pdfonlyone');
 
 //Citas
 Route::get('citas', 'CitaController@index')->name('citas.index');
@@ -26,6 +27,7 @@ Route::put('citas/{cita}', 'CitaController@update')->name('citas.update');
 Route::delete('citas/{cita}', 'CitaController@destroy')->name('citas.destroy');
 Route::get('citas/{cita}/edit', 'CitaController@edit')->name('citas.edit');
 Route::get('citas/calendar', 'CitaController@calendar')->name('citas.calendar');
+Route::get('citas/{cita}/pdf', 'CitaController@citapdf')->name('citas.pdfonlyone');
 
 //Usuario
 Route::get('usuarios', 'UserController@index')->name('usuarios.index');
@@ -35,6 +37,7 @@ Route::get('usuarios/{usuario}', 'UserController@show')->name('usuarios.show');
 Route::get('usuarios/{usuario}/edit', 'UserController@edit')->name('usuarios.edit');
 Route::put('usuarios/{usuario}', 'UserController@update')->name('usuarios.update');
 Route::delete('usuarios/{usuario}', 'UserController@destroy')->name('usuarios.destroy');
+Route::get('usuarios/{usuario}/pdf', 'UserController@userpdf')->name('usuarios.pdfonlyone');
 
 Auth::routes();
 

@@ -56,6 +56,17 @@ class User extends Authenticatable {
         return $listado;
     }
     
+    //Cruzamos la tabla de usuario con roles.
+    public static function getUser($id) {
+        $listado = DB::table('users')->join('role_user', 'role_user.user_id', '=', 'users.id')
+                ->join('roles', 'roles.id', '=', 'role_user.role_id')
+                ->where('users.id', '=', $id)
+                ->select('users.*', 'roles.description')
+                ->get();
+
+        return $listado;
+    }
+    
     //Devolvemos las cabeceras para la tabla
     public static function headers() {
         $listado = array('Nombre', 'Email', 'Rol');

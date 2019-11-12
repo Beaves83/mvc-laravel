@@ -6,6 +6,7 @@ use App\User;
 use App\Role;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class UserController extends Controller {
 
@@ -142,5 +143,16 @@ class UserController extends Controller {
 
         \Session::flash('message', 'El usuario ' . $usuario->name . ' ha sido eliminado.');
         return \Redirect::to('usuarios');
+    }
+    
+    /**
+     * Create a pdf.
+     *
+     */  
+    public function userpdf($id)
+    {        
+        $user = User::getUser($id)[0];
+        $pdf = PDF::loadView("usuarios.pdf", compact(['user']));
+        return $pdf->download("usuario".$user->name.".pdf");
     }
 }

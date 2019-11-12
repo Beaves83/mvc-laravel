@@ -7,6 +7,7 @@ use App\Provincia;
 use App\Municipio;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Input;
+use Barryvdh\DomPDF\Facade as PDF;
 
 class ClienteController extends Controller {
 
@@ -172,5 +173,13 @@ class ClienteController extends Controller {
     public function clientslist() {
         $clientes = Cliente::all();
         return $clientes;
+    }
+    
+    public function clientepdf($id)
+    {        
+        $cliente = Cliente::getCliente($id)[0];
+
+        $pdf = PDF::loadView("clientes.pdf", compact(['cliente']));
+        return $pdf->download("cliente".$cliente->codigo."".$cliente->razonsocial.".pdf");      
     }
 }

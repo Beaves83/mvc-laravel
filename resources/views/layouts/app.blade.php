@@ -75,10 +75,6 @@
                             </li>
                             @endif
                             @endif
-
-
-
-
                             @endguest
                         </ul>
 
