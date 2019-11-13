@@ -58,11 +58,14 @@
                                     Clientes
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ URL::to('clientes') }}">Listado clientes</a>
+                                    <a class="dropdown-item" href="{{ URL::to('clientes/create') }}">Nuevo</a>
+                                    <a class="dropdown-item" href="{{ URL::to('clientes') }}">Listado</a>
                                     @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
-                                    <a class="dropdown-item" href="{{ URL::to('clientes/create') }}">Crear un cliente</a>
-                                    @endif
+                                    <a class="dropdown-item" href="{{ URL::to('clientes/expires') }}">Contratos que expiran</a>
                                     <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ URL::to('clientes/historical') }}">Histórico</a>      
+                                    @endif
+                                    
                                 </div>
                             </li>
                             <li class="nav-item dropdown">
@@ -70,9 +73,12 @@
                                     Citas
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ URL::to('citas') }}">Listado citas</a>
-                                    <a class="dropdown-item" href="{{ URL::to('citas/create') }}">Crear una cita</a>
+                                    <a class="dropdown-item" href="{{ URL::to('citas/create') }}">Nueva</a>
+                                    <a class="dropdown-item" href="{{ URL::to('citas') }}">Listado</a>                
                                     <div class="dropdown-divider"></div>
+                                    @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
+                                    <a class="dropdown-item" href="{{ URL::to('citas/historical') }}">Histórico</a>    
+                                    @endif
                                 </div>
                             </li>
                             @if ( Auth::user()->hasRole('admin') )
@@ -81,9 +87,9 @@
                                     Usuarios
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ URL::to('usuarios') }}">Listado usuarios</a>
-                                    <a class="dropdown-item" href="{{ URL::to('usuarios/create') }}">Crear un usuario</a>
-                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ URL::to('usuarios/create') }}">Nuevo</a>
+                                    <a class="dropdown-item" href="{{ URL::to('usuarios') }}">Listado</a>
+<!--                                    <div class="dropdown-divider"></div>-->
                                 </div>
                             </li>
                             @endif

@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use DateTime;
+use Carbon\Carbon;
 
 class Cliente extends Model {
 
@@ -15,10 +16,36 @@ class Cliente extends Model {
         'numeroreconocimientoscontratados'
     ];
 
-    //Cruzamos la tabla de clientes con municipios y provincias.
+    //Todos los clientes
     public static function allClient() {
         $listado = DB::table('clientes')->join('municipios', 'municipios.id', '=', 'clientes.municipio')
                 ->join('provincias', 'provincias.id', '=', 'clientes.provincia')
+                ->select('clientes.*', 'municipios.city_name', 'provincias.region_name')
+                ->get();
+
+        return $listado;
+    }
+    
+    //Solo los clientes con contrato activo.
+    public static function onlyActives() {
+        $listado = DB::table('clientes')->join('municipios', 'municipios.id', '=', 'clientes.municipio')
+                ->join('provincias', 'provincias.id', '=', 'clientes.provincia')
+                ->where('clientes.activo',true)
+                ->select('clientes.*', 'municipios.city_name', 'provincias.region_name')
+                ->get();
+
+        return $listado;
+    }
+    
+    //Listado de clientes que su contrato expira dentro de un mes o menos.
+    public static function expires() {
+        $listado = DB::table('clientes')->join('municipios', 'municipios.id', '=', 'clientes.municipio')
+                ->join('provincias', 'provincias.id', '=', 'clientes.provincia')
+                ->where([
+                    ['clientes.activo', '=', true],
+                    ['clientes.fechafincontrato', '<', Carbon::now()->addDays(30)],
+                    ['clientes.fechafincontrato', '>', Carbon::now()]
+                ])
                 ->select('clientes.*', 'municipios.city_name', 'provincias.region_name')
                 ->get();
 

@@ -17,6 +17,17 @@ class CitaController extends Controller {
      * @return a view with and the list of the clients.
      */
     public function index() {
+        $citas = Cita::onlyActives();
+        $headers = Cita::headers();
+        return view('citas.index', compact(['citas', 'headers']));
+    }
+    
+    /**
+     * Default page for showing all the list.
+     *
+     * @return a view with and the list of the clients.
+     */
+    public function historical() {
         $citas = Cita::allAppointment();
         $headers = Cita::headers();
         return view('citas.index', compact(['citas', 'headers']));

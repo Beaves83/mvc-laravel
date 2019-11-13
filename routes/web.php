@@ -7,7 +7,9 @@ Route::get('/', function () {
 Auth::routes();
 
 //Clientes
-Route::get('clientes', 'ClienteController@index')->name('clientes.index');//->middleware(ApiAuthMiddleware::class);
+Route::get('clientes', 'ClienteController@index')->name('clientes.index');
+Route::get('clientes/historical', 'ClienteController@historical')->name('clientes.historical');
+Route::get('clientes/expires', 'ClienteController@expires')->name('clientes.expires');
 Route::get('clientes/create', 'ClienteController@create')->name('clientes.create');
 Route::post('clientes', 'ClienteController@store')->name('clientes.store');
 Route::get('clientes/{cliente}', 'ClienteController@show')->name('clientes.show')->where('cliente', '[0-9]+');
@@ -19,6 +21,7 @@ Route::get('clientes/{cliente}/pdf', 'ClienteController@clientepdf')->name('clie
 
 //Citas
 Route::get('citas', 'CitaController@index')->name('citas.index');
+Route::get('citas/historical', 'CitaController@historical')->name('citas.historical');
 Route::get('citas/create', 'CitaController@create')->name('citas.create');
 Route::post('citas', 'CitaController@store')->name('citas.store');
 Route::get('citas/{cita}', 'CitaController@show')->name('citas.show')->where('cita', '[0-9]+');

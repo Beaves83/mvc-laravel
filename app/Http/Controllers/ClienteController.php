@@ -21,7 +21,29 @@ class ClienteController extends Controller {
         //Actualizamos los contratos. Si tarda mucho habrá que ponerlo en otro sitio.
         Cliente::updateContratosActivos();
         
+        $clientes = Cliente::onlyActives();
+        $headers = Cliente::headers();
+        
+        return view('clientes.index', compact(['clientes', 'headers']));
+    }
+    
+    public function historical() {
+        
+        //Actualizamos los contratos. Si tarda mucho habrá que ponerlo en otro sitio.
+        Cliente::updateContratosActivos();
+        
         $clientes = Cliente::allClient();
+        $headers = Cliente::headers();
+        
+        return view('clientes.index', compact(['clientes', 'headers']));
+    }
+    
+    public function expires() {
+        
+        //Actualizamos los contratos. Si tarda mucho habrá que ponerlo en otro sitio.
+        Cliente::updateContratosActivos();
+        
+        $clientes = Cliente::expires();
         $headers = Cliente::headers();
         
         return view('clientes.index', compact(['clientes', 'headers']));
