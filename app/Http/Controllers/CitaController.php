@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use App\Cita;
 use App\Cliente;
 use Barryvdh\DomPDF\Facade as PDF;
+use Carbon\Carbon;
 
 class CitaController extends Controller {
 
@@ -102,6 +103,16 @@ class CitaController extends Controller {
         $cita = Cita::find($id);
         $cliente = Cliente::find($cita->cliente_id);
         $bloqueada = false;
+        
+        //dd($cita->fecha < Carbon::now());
+        if($cita->fecha < Carbon::now()){
+            \Session::flash('message', 'La fecha de esta cita es antigua. Ya no se puede modificar.');
+            return \Redirect::to('citas');
+        } else if ($cita->numeroempleadosasistentes > 0){
+            \Session::flash('message', 'Esta cita ya ha sido cerrada.');
+            return \Redirect::to('citas');
+        }
+        
         if ($cita->numeroempleadosasistentes > 0 or auth()->user()->roles()->get()->first()->name == 'medico' ) {
             \Session::flash('message', 'La cita no se puede modificar porque ya ha habido asistentes a la consulta.');
             $bloqueada = true;
@@ -134,7 +145,10 @@ class CitaController extends Controller {
             $cita->fecha = Input::get('fecha');
             $cita->numeroempleadosreservados = Input::get('numeroempleadosreservados');
             if(Input::get('numeroempleadosasistentes') != null){
-                $cita->numeroempleadosasistentes = Input::get('numeroempleadosasistentes');                
+                $cita->numeroempleadosasistentes = Input::get('numeroempleadosasistentes'); 
+                
+                //En este punto actualizamos el contrato del cliente.
+                Cliente::updateBudget($cita);
             }    
             $cita->update();
                   

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use DateTime;
 use Carbon\Carbon;
+use App\Cita;
 
 class Cliente extends Model {
 
@@ -97,5 +98,15 @@ class Cliente extends Model {
                     }
                 });
     }
+    
+    //Actualizamos el número de reconocimientos en el contrato
+    public static function updateBudget($cita) {
+
+        $cliente = Cliente::find($cita->cliente_id);
+        $cliente-> numeroreconocimientosutilizados = 
+                $cliente->numeroreconocimientosutilizados + $cita->numeroempleadosasistentes;
+        $cliente->update();
+    }
+    
 
 }

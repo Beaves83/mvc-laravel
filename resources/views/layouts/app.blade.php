@@ -58,7 +58,9 @@
                                     Clientes
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
                                     <a class="dropdown-item" href="{{ URL::to('clientes/create') }}">Nuevo</a>
+                                    @endif
                                     <a class="dropdown-item" href="{{ URL::to('clientes') }}">Listado</a>
                                     @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
                                     <a class="dropdown-item" href="{{ URL::to('clientes/expires') }}">Contratos que expiran</a>
@@ -73,10 +75,12 @@
                                     Citas
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ URL::to('citas/create') }}">Nueva</a>
-                                    <a class="dropdown-item" href="{{ URL::to('citas') }}">Listado</a>                
-                                    <div class="dropdown-divider"></div>
                                     @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
+                                    <a class="dropdown-item" href="{{ URL::to('citas/create') }}">Nueva</a>
+                                     @endif
+                                    <a class="dropdown-item" href="{{ URL::to('citas') }}">Pendientes</a>                                                  
+                                    @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
+                                    <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ URL::to('citas/historical') }}">Histórico</a>    
                                     @endif
                                 </div>

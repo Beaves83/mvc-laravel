@@ -55,9 +55,16 @@
 
     @endif
 
+    @if ( Auth::user()->hasRole('medico') )
+    <div class="d-flex justify-content-center">
+        {{ Form::submit('Finalizar', array('class' => 'btn btn-primary')) }}
+    </div>
+    @else
     <div class="d-flex justify-content-center">
         {{ Form::submit('Actualizar', array('class' => 'btn btn-primary')) }}
     </div>
+    @endif
+    
     {{ Form::close() }}
 
 </div>

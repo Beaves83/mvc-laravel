@@ -195,13 +195,19 @@ class ClienteController extends Controller {
     /**
      * Return a list with the recurses.
      *
-     * @return a view with and the list of the clients.
+     * @param  int  $id
+     * @return list of the clients.
      */
     public function clientslist() {
         $clientes = Cliente::all();
         return $clientes;
     }
     
+    /**
+     * 
+     *
+     * @return a view with and the list of the clients.
+     */
     public function clientepdf($id)
     {        
         $cliente = Cliente::getCliente($id)[0];

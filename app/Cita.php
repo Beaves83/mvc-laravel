@@ -25,10 +25,13 @@ class Cita extends Model {
         return $listado;
     }
     
-    //Cruzamos la tabla de clientes con municipios y provincias.
+    //
     public static function onlyActives() {
         $listado = DB::table('citas')->join('clientes', 'clientes.id', '=', 'citas.cliente_id')
-                ->where('activo', true)
+                ->where([
+                    ['clientes.activo', '=', true],
+                    ['citas.numeroempleadosasistentes', '<=', 0]
+                ])
                 ->select('citas.*', 'clientes.razonsocial')
                 ->get();
 
