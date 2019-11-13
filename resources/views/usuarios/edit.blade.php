@@ -5,7 +5,7 @@
 @section('content')
 <!-- if there are creation errors, they will show here -->
 {{ Html::ul($errors->all()) }}
-<div class="jumbotron w-50 mx-auto border shadow-lg p-4 mb-4 bg-white">
+<div class="jumbotron w-100 mx-auto border shadow-lg p-4 mb-4 bg-white">
     <div class="jumbotron h-25 d-flex justify-content-center"><h1>Edición de usuarios</h1></div>
 {{ Form::model($usuario, array('route' => array('usuarios.update', $usuario->id), 'method' => 'PUT')) }}
 

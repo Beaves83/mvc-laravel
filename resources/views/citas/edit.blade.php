@@ -8,7 +8,7 @@
 @if (Session::has('message') AND Auth::user()->hasRole('secretario'))
 <div class="alert alert-info">{{ Session::get('message') }}</div>
 @endif
-<div class="jumbotron w-50 mx-auto border shadow-lg p-4 mb-4 bg-white">
+<div class="jumbotron w-100 mx-auto border shadow-lg p-4 mb-4 bg-white">
     <div class="jumbotron h-25 d-flex justify-content-center"><h1>Edición de citas</h1></div>
     {{ Form::model($cita, array('route' => array('citas.update', $cita->id), 'method' => 'PUT')) }}
     <!--<H3>{{$cliente->codigo}}</H3>-->
