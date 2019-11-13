@@ -13,11 +13,11 @@ _La aplicación consiste en un sistema de gestión de citas médicas para un cen
 El sitema cuenta con tres perfiles disponibles, con los cuales accederemos a distintas opciones que nos ofrede el GRM. Los tres roles
 que tenemos serán **Secretario**, **Médico** y **Administrador**.  
 
-**Secreatario** - Tendrá acceso a todos los listados. Puede crear clientes y citas. Puede modificar citas siempre y cuando no se haya realizado ninguna consulta en esa cita.  
+**Secreatario** - Tendrá acceso a todos los listados. Puede crear clientes y citas. Puede modificar citas siempre y cuando no se haya realizado ninguna consulta en esa cita. Cuenta con el acceso al historico de clientes y citas. 
 
 **Médico** - Tendrá acceso a todos los listados. Puedes actualziar el número de consultas realizadas en una cita.  
 
-**Administrador** - Tendrá acceso a todos los listados. Puede crear clientes, citas y usuarios. Puede modificar citas siempre y cuando no se haya realizado ninguna consulta en esa cita.  
+**Administrador** - Tendrá acceso a todos los listados. Puede crear clientes, citas y usuarios. Puede modificar citas siempre y cuando no se haya realizado ninguna consulta en esa cita. Cuenta con el acceso al historico de clientes y citas.
 
 
 ## Construido con 🛠️
