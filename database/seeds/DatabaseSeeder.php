@@ -22,5 +22,23 @@ class DatabaseSeeder extends Seeder
         //Rellenamos la BBDD con valores.
         factory(App\Cliente::class, 100)->create();
         factory(App\Cita::class, 500)->create();
+        
+        //Actualizamos los contratos para que estén activos solo los correctos.
+        DB::table('clientes') //->where('activo', true)
+                ->chunkById(100, function ($clientes) {
+                    foreach ($clientes as $cliente) {
+                        if (($cliente->numeroreconocimientoscontratados < $cliente->numeroreconocimientosutilizados)
+                                OR ( new DateTime($cliente->fechafincontrato) < new DateTime('today'))) {
+                            DB::table('clientes')
+                            ->where('id', $cliente->id)
+                            ->update(['activo' => false]);
+                        } else {
+                            DB::table('clientes')
+                            ->where('id', $cliente->id)
+                            ->update(['activo' => true]);
+                        }
+                    }
+                });
+        
     }
 }

@@ -21,7 +21,7 @@
         <script src="{{ asset('js/functions.js') }}"></script>
 
         <!-- Styles -->
-<!--        <link href="{{ asset('css/datatable.css') }}" rel="stylesheet">-->
+        <!--        <link href="{{ asset('css/datatable.css') }}" rel="stylesheet">-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
@@ -34,7 +34,7 @@
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel fixed-top navbar-expand-sm navbar-light" style="background-color: #e3f2fd;">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'GRM') }}
+                        GRM<!--{{ config('app.name', 'GRM') }}-->
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
@@ -52,26 +52,39 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ URL::to('citas/calendar') }}">Calendario</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('clientes') }}">Listado clientes</a>
+
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Clientes
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ URL::to('clientes') }}">Listado clientes</a>
+                                    @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
+                                    <a class="dropdown-item" href="{{ URL::to('clientes/create') }}">Crear un cliente</a>
+                                    @endif
+                                    <div class="dropdown-divider"></div>
+                                </div>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('citas') }}">Listado citas</a>
-                            </li>  
-                            @if ( Auth::user()->hasRole('admin') OR Auth::user()->hasRole('secretario') )
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('clientes/create') }}">Crear un cliente</a>
-                            </li>    
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('citas/create') }}">Crear una cita</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Citas
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ URL::to('citas') }}">Listado citas</a>
+                                    <a class="dropdown-item" href="{{ URL::to('citas/create') }}">Crear una cita</a>
+                                    <div class="dropdown-divider"></div>
+                                </div>
                             </li>
-                            @endif
                             @if ( Auth::user()->hasRole('admin') )
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('usuarios') }}">Listado usuarios</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ URL::to('usuarios/create') }}">Crear un usuario</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Usuarios
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ URL::to('usuarios') }}">Listado usuarios</a>
+                                    <a class="dropdown-item" href="{{ URL::to('usuarios/create') }}">Crear un usuario</a>
+                                    <div class="dropdown-divider"></div>
+                                </div>
                             </li>
                             @endif
                             @endif

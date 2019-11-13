@@ -29,7 +29,7 @@ class CitaController extends Controller {
      */
     public function create() {
         auth()->user()->authorizeRoles(['admin','secretario']);
-        $clientes = Cliente::all('razonsocial', 'id');
+        $clientes = Cliente::clientesConContratoActivo();
         return view('citas.create', compact(['clientes']));
     }
 

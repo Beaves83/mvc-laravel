@@ -17,8 +17,13 @@ class ClienteController extends Controller {
      * @return a view with and the list of the clients.
      */
     public function index() {
+        
+        //Actualizamos los contratos. Si tarda mucho habrá que ponerlo en otro sitio.
+        Cliente::updateContratosActivos();
+        
         $clientes = Cliente::allClient();
         $headers = Cliente::headers();
+        
         return view('clientes.index', compact(['clientes', 'headers']));
     }
 
@@ -71,7 +76,7 @@ class ClienteController extends Controller {
             $cliente->fechainiciocontrato = Input::get('fechainiciocontrato');
             $cliente->fechafincontrato = Input::get('fechafincontrato');
             $cliente->numeroreconocimientoscontratados = Input::get('numeroreconocimientoscontratados');
-
+            $cliente->activo = true;
             $cliente->save();
 
             \Session::flash('message', '¡Cliente creado!');
